@@ -23,7 +23,7 @@ src/
 │   │   │   └── Reviews.jsx
 │   │   └── UserLayout.jsx
 │   │
-│   ├── worker/ 				#worker 
+│   ├── worker/
 │   │   ├── pages/
 │   │   │   ├── Dashboard.jsx
 │   │   │   └── MyJobs.jsx
