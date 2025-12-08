@@ -15,7 +15,7 @@ src/
 │
 ├── modules/                    # Role-based modules
 │   │
-│   ├── user/
+│   ├── user/					#user
 │   │   ├── pages/
 │   │   │   ├── Dashboard.jsx
 │   │   │   ├── MyTasks.jsx
@@ -29,7 +29,7 @@ src/
 │   │   │   └── MyJobs.jsx
 │   │   └── WorkerLayout.jsx
 │   │
-│   └── admin/
+│   └── admin/					#admin
 │       ├── pages/
 │       │   ├── Dashboard.jsx
 │       │   └── ManageUsers.jsx
