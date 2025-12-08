@@ -1,17 +1,20 @@
-frontend folder structure----
+### 📁 Frontend Folder Structure
+
+```bash
 src/
 │
-├── components/              # Reusable UI Components
+├── components/                 # Reusable UI Components
 │   ├── Sidebar.jsx
 │   ├── Header.jsx
 │   ├── StatCard.jsx
 │   ├── QuickActions.jsx
 │   └── TaskCard.jsx
 │
-├── context/                 # Context API (global state)
+├── context/                    # Context API (global state)
 │   └── ThemeContext.jsx
 │
-├── modules/                 # Role-based modules
+├── modules/                    # Role-based modules
+│   │
 │   ├── user/
 │   │   ├── pages/
 │   │   │   ├── Dashboard.jsx
@@ -32,7 +35,7 @@ src/
 │       │   └── ManageUsers.jsx
 │       └── AdminLayout.jsx
 │
-├── utils/                   # Helper functions (simple ones)
+├── utils/                      # Helper functions (simple ones)
 │   └── formatDate.js
 │
 ├── App.jsx
