@@ -3,7 +3,10 @@
 ```bash
 src/
 │
-├── components/                     # Reusable UI Components
+├── assets/                          # Images, icons, static files
+│   └── avatar_placeholder.png      
+│
+├── components/                      # Reusable UI components
 │   ├── Sidebar.jsx
 │   ├── Header.jsx
 │   ├── StatCard.jsx
@@ -11,45 +14,49 @@ src/
 │   ├── TaskCard.jsx
 │   └── Button.jsx
 │
-├── context/                        # Context API (global state)
-│   └── ThemeContext.jsx
+├── context/                         # Global state (Theme, Auth, etc.)
+│   └── ThemeContext.jsx            
 │
-├── modules/                        # Role-based modules
+├── modules/                         # Role-based architecture
 │   │
-│   ├── user/
+│   ├── authentication/              # Login & Signup
+│   │   ├── Login.jsx
+│   │   └── SignUp.jsx
+│   │
+│   ├── user/                        # User Module
 │   │   ├── pages/
-│   │   │   ├── Dashboard.jsx             # User Dashboard
-│   │   │   ├── MyTasks.jsx               # All Posted Tasks
-│   │   │   ├── PostTask.jsx              # Create New Task
-│   │   │   ├── TaskDetail.jsx            # Task Details + Bids View
-│   │   │   ├── Profile.jsx               # User Profile Settings
-│   │   │   └── Reviews.jsx               # User Reviews Page
+│   │   │   ├── Dashboard.jsx        
+│   │   │   ├── MyTasks.jsx          
+│   │   │   ├── PostTask.jsx         
+│   │   │   ├── TaskDetail.jsx       
+│   │   │   ├── Profile.jsx          
+│   │   │   └── Reviews.jsx          
 │   │   └── UserLayout.jsx
 │   │
-│   ├── worker/
+│   ├── worker/                      # Worker Module
 │   │   ├── pages/
-│   │   │   ├── Dashboard.jsx             # Worker Dashboard
-│   │   │   ├── BrowseTasks.jsx           # Browse Available Tasks
-│   │   │   ├── MyBids.jsx                # Worker Bids List
-│   │   │   ├── TaskDetail.jsx            # Worker Task Detail (Bid Form)
-│   │   │   └── Profile.jsx               # Worker Profile + Skills + ID Proof
+│   │   │   ├── Dashboard.jsx        
+│   │   │   ├── BrowseTasks.jsx      
+│   │   │   ├── MyBids.jsx           
+│   │   │   ├── TaskDetail.jsx       
+│   │   │   └── Profile.jsx          
 │   │   └── WorkerLayout.jsx
 │   │
-│   └── admin/
+│   └── admin/                       # Admin Module
 │       ├── pages/
-│       │   ├── Dashboard.jsx             # Admin Dashboard
-│       │   ├── ManageTasks.jsx           # Admin - Task Monitoring
-│       │   ├── ManageUsers.jsx           # Admin - User Management
-│       │   └── WorkerVerification.jsx    # Admin - Worker Verification Page
+│       │   ├── Dashboard.jsx        
+│       │   ├── ManageTasks.jsx      
+│       │   ├── ManageUsers.jsx      
+│       │   └── WorkerVerification.jsx
 │       └── AdminLayout.jsx
 │
-├── utils/                           # Helper functions
+├── utils/                            # Helper functions
 │   └── formatDate.js
 │
-├── styles/                          # Tailwind + Optional CSS
-│   ├── globals.css
-│   └── theme.css
+├── styles/                           # Global project-wide styles
+│   ├── global.css                  
+│   └── theme.css                   
 │
-├── App.jsx                          # Root routes setup
-├── main.jsx                         # Entry point (renders the app)
-└── index.css                        # Tailwind import file
+├── App.jsx                           # Root App component
+├── main.jsx                          # Entry point for React
+└── index.css                         # Base styles
