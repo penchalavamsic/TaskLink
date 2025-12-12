@@ -47,7 +47,8 @@ src/
 │       │   ├── Dashboard.jsx        
 │       │   ├── ManageTasks.jsx      
 │       │   ├── ManageUsers.jsx      
-│       │   └── WorkerVerification.jsx
+│       │   ├── WorkerVerification.jsx
+│       │   └── AdminProfile.jsx     
 │       └── AdminLayout.jsx
 │
 ├── utils/                            # Helper functions
@@ -60,3 +61,4 @@ src/
 ├── App.jsx                           # Root App component
 ├── main.jsx                          # Entry point for React
 └── index.css                         # Base styles
+
