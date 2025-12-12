@@ -26,6 +26,15 @@ function App() {
                 <Route path="profile" element={<Profile />} />
                 <Route path="task-detail/:id" element={<TaskDetail />} />
             </Route>
+
+            {/* ADMIN MODULE */}
+            <Route path="/admin" element={<AdminLayout />}>
+                <Route path="dashboard" element={<Dashboard />} />
+                <Route path="manage-users" element={<ManageUsers />} />
+                <Route path="manage-tasks" element={<ManageTasks />} />
+                <Route path="verification" element={<WorkerVerification />} />
+            </Route>
+
         </Routes>
     );
 }
