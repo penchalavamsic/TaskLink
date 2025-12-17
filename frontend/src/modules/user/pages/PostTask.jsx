@@ -16,7 +16,7 @@ const PostTask = () => {
             <h2 className="mb-4 fw-bold">Post a New Task</h2>
 
             <div className="row justify-content-center">
-                <div className="col-lg-8">
+                <div className="col-12">
                     <div className="card border-0 shadow-sm">
                         <div className="card-body p-4">
                             {showSuccess && (
@@ -32,7 +32,7 @@ const PostTask = () => {
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="taskDescription" className="form-label fw-semibold">Description</label>
-                                    <textarea className="form-control" id="taskDescription" rows="5" placeholder="Describe your task in detail..."></textarea>
+                                    <textarea className="form-control" id="taskDescription" rows="10" placeholder="Describe your task in detail..."></textarea>
                                 </div>
                                 <div className="row mb-3">
                                     <div className="col-md-6">
@@ -46,7 +46,7 @@ const PostTask = () => {
                                         </select>
                                     </div>
                                     <div className="col-md-6">
-                                        <label htmlFor="budget" className="form-label fw-semibold">Budget ($)</label>
+                                        <label htmlFor="budget" className="form-label fw-semibold">Budget (₹)</label>
                                         <input type="number" className="form-control" id="budget" placeholder="100" />
                                     </div>
                                 </div>

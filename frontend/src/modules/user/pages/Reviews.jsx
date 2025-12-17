@@ -1,58 +1,96 @@
-import React from 'react';
+import React, { useState } from "react";
 
 const Reviews = () => {
-    // Mock data
-    const reviews = [
-        { id: 1, reviewer: 'Alice Smith', role: 'Project Manager', rating: 5, comment: 'John is an excellent developer. Delivered on time and high quality code.', date: '2 days ago' },
-        { id: 2, reviewer: 'Bob Jones', role: 'Designer', rating: 4, comment: 'Great communication, but slight delay in delivery. Overall good experience.', date: '1 week ago' },
-        { id: 3, reviewer: 'Charlie Brown', role: 'Startup Founder', rating: 5, comment: 'Fantastic work! Looking forward to working together again.', date: '2 weeks ago' },
-    ];
+  const reviews = [
+    {
+      id: 1,
+      name: "Alice Smith",
+      role: "Project Manager",
+      rating: 5,
+      comment:
+        "John is an excellent developer. Delivered on time and with high quality code.",
+      image: "https://randomuser.me/api/portraits/women/44.jpg",
+    },
+    {
+      id: 2,
+      name: "Bob Jones",
+      role: "Designer",
+      rating: 4,
+      comment:
+        "Great communication and clean UI work. Very professional approach.",
+      image: "https://randomuser.me/api/portraits/men/32.jpg",
+    },
+    {
+      id: 3,
+      name: "Charlie Brown",
+      role: "Startup Founder",
+      rating: 5,
+      comment:
+        "Fantastic work! Will definitely collaborate again in future projects.",
+      image: "https://randomuser.me/api/portraits/men/75.jpg",
+    },
+  ];
 
-    const renderStars = (rating) => {
-        const stars = [];
-        for (let i = 1; i <= 5; i++) {
-            if (i <= rating) {
-                stars.push(<i key={i} className="bi bi-star-fill text-warning"></i>);
-            } else {
-                stars.push(<i key={i} className="bi bi-star text-muted"></i>);
-            }
-        }
-        return stars;
-    };
+  const [active, setActive] = useState(1);
 
-    return (
-        <div className="container-fluid p-0">
-            <h2 className="mb-4 fw-bold">My Reviews</h2>
+  const prev = () =>
+    setActive((active - 1 + reviews.length) % reviews.length);
+  const next = () => setActive((active + 1) % reviews.length);
 
-            <div className="row">
-                <div className="col-12">
-                    <div className="card border-0 shadow-sm">
-                        <div className="card-body">
-                            <div className="list-group list-group-flush">
-                                {reviews.map(review => (
-                                    <div key={review.id} className="list-group-item p-4 border-bottom">
-                                        <div className="d-flex justify-content-between align-items-start">
-                                            <div>
-                                                <h5 className="fw-bold mb-0">{review.reviewer}</h5>
-                                                <small className="text-muted">{review.role}</small>
-                                            </div>
-                                            <small className="text-muted">{review.date}</small>
-                                        </div>
-                                        <div className="mb-2 mt-1">
-                                            {renderStars(review.rating)}
-                                        </div>
-                                        <p className="mb-0 text-secondary">
-                                            "{review.comment}"
-                                        </p>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                </div>
+  return (
+    <section className="reviews-section">
+      <h2>Testimonials</h2>
+
+      <div className="reviews-slider">
+        <button className="review-nav" onClick={prev}>‹</button>
+
+        {reviews.map((review, index) => (
+          <div
+            key={review.id}
+            className={`review-card ${
+              index === active ? "active" : ""
+            }`}
+          >
+            <span className="review-quote">“</span>
+
+            <img
+              src={review.image}
+              alt={review.name}
+              className="review-avatar"
+            />
+
+            <p className="review-comment">{review.comment}</p>
+
+            <div className="review-stars mb-2">
+              {[...Array(5)].map((_, i) => (
+                <i
+                  key={i}
+                  className={`bi bi-star-fill ${
+                    i < review.rating ? "filled" : ""
+                  }`}
+                ></i>
+              ))}
             </div>
-        </div>
-    );
+
+            <h5 className="review-name">{review.name}</h5>
+            <div className="review-role">{review.role}</div>
+          </div>
+        ))}
+
+        <button className="review-nav" onClick={next}>›</button>
+      </div>
+
+      <div className="review-dots">
+        {reviews.map((_, i) => (
+          <span
+            key={i}
+            className={`review-dot ${i === active ? "active" : ""}`}
+            onClick={() => setActive(i)}
+          ></span>
+        ))}
+      </div>
+    </section>
+  );
 };
 
 export default Reviews;

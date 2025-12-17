@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 
 const QuickActions = () => {
     return (
-        <div className="card border-0 shadow-sm">
-            <div className="card-header bg-white border-bottom-0 pt-4 pb-0">
+        <div className="card border-5 shadow-sm">
+            <div className="card-header bg-white border-bottom-0 pt-6 pb-0">
                 <h5 className="fw-bold mb-0">Quick Actions</h5>
             </div>
             <div className="card-body">

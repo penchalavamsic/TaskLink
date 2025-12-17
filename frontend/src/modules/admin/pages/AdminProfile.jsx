@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import Button from '../../../components/Button';
 import avatar from '../../../assets/avatar_placeholder.png';
 
-const Profile = () => {
+const AdminProfile = () => {
     const fileInputRef = useRef(null);
     const [profileImage, setProfileImage] = useState(avatar);
 
@@ -26,7 +26,7 @@ const Profile = () => {
 
     return (
         <div className="container-fluid p-0">
-            <h2 className="mb-4 fw-bold">My Profile</h2>
+            <h2 className="mb-4 fw-bold">Admin Profile</h2>
 
             <div className="row g-4">
                 <div className="col-lg-4">
@@ -35,8 +35,8 @@ const Profile = () => {
                         <div className="mb-3">
                             <img src={profileImage} className="rounded-circle img-thumbnail" alt="Profile" style={{ width: '150px', height: '150px', objectFit: 'cover' }} />
                         </div>
-                        <h4 className="fw-bold mb-1">John Doe</h4>
-                        <p className="text-muted mb-3">Web Developer & Designer</p>
+                        <h4 className="fw-bold mb-1">Admin User</h4>
+                        <p className="text-muted mb-3">System Administrator</p>
                         <div className="d-flex justify-content-center gap-2 mb-3">
                             <input
                                 type="file"
@@ -52,16 +52,16 @@ const Profile = () => {
                         <hr />
                         <div className="d-flex justify-content-around text-start">
                             <div className="text-center">
-                                <h5 className="fw-bold mb-0">24</h5>
-                                <small className="text-muted">Tasks</small>
+                                <h5 className="fw-bold mb-0">150</h5>
+                                <small className="text-muted">Users Managed</small>
                             </div>
                             <div className="text-center">
-                                <h5 className="fw-bold mb-0">4.8</h5>
-                                <small className="text-muted">Rating</small>
+                                <h5 className="fw-bold mb-0">95%</h5>
+                                <small className="text-muted">Uptime</small>
                             </div>
                             <div className="text-center">
-                                <h5 className="fw-bold mb-0">12</h5>
-                                <small className="text-muted">Reviews</small>
+                                <h5 className="fw-bold mb-0">500</h5>
+                                <small className="text-muted">Tasks Verified</small>
                             </div>
                         </div>
                     </div>
@@ -78,17 +78,17 @@ const Profile = () => {
                                 <div className="row mb-3">
                                     <div className="col-md-6">
                                         <label className="form-label fw-semibold">First Name</label>
-                                        <input type="text" className="form-control" defaultValue="John" />
+                                        <input type="text" className="form-control" defaultValue="Admin" />
                                     </div>
                                     <div className="col-md-6">
                                         <label className="form-label fw-semibold">Last Name</label>
-                                        <input type="text" className="form-control" defaultValue="Doe" />
+                                        <input type="text" className="form-control" defaultValue="User" />
                                     </div>
                                 </div>
                                 <div className="row mb-3">
                                     <div className="col-md-6">
                                         <label className="form-label fw-semibold">Email</label>
-                                        <input type="email" className="form-control" defaultValue="john.doe@example.com" />
+                                        <input type="email" className="form-control" defaultValue="admin@example.com" />
                                     </div>
                                     <div className="col-md-6">
                                         <label className="form-label fw-semibold">Phone</label>
@@ -97,13 +97,13 @@ const Profile = () => {
                                 </div>
                                 <div className="mb-3">
                                     <label className="form-label fw-semibold">Bio</label>
-                                    <textarea className="form-control" rows="3" defaultValue="Passionate web developer with 5 years of experience in React and Node.js."></textarea>
+                                    <textarea className="form-control" rows="3" defaultValue="Experienced system administrator managing platform operations and user accounts."></textarea>
                                 </div>
                                 <div className="mb-4">
                                     <label className="form-label fw-semibold">Address</label>
-                                    <input type="text" className="form-control" defaultValue="123 Main St, New York, NY 10001" />
+                                    <input type="text" className="form-control" defaultValue="123 Admin St, New York, NY 10001" />
                                 </div>
-                                <div className="text-center">
+                                <div className="text-end">
                                     <Button variant="primary" type="submit">Save Changes</Button>
                                 </div>
                             </form>
@@ -115,4 +115,4 @@ const Profile = () => {
     );
 };
 
-export default Profile;
+export default AdminProfile;
