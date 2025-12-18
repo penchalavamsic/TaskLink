@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const TaskCard = ({ task }) => {
+const TaskCard = ({ task, detailPath = '/user/task-detail' }) => {
     // Default values if task prop is missing properties
     const {
         id = 1,
