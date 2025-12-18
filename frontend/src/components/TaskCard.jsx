@@ -29,7 +29,7 @@ const TaskCard = ({ task }) => {
                     {description}
                 </p>
                 <div className="d-flex justify-content-between align-items-center">
-                    <span className="fw-bold text-primary">{budget}</span>
+                    <span className="badge bg-success text-white fw-bold px-2 py-1">{budget}</span>
                     <Link to={`/user/task-detail/${id}`} className="btn btn-sm btn-outline-primary rounded-pill px-4">
                         View Details
                     </Link>

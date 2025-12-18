@@ -7,6 +7,7 @@ const WorkerProfile = () => {
     const [profileData, setProfileData] = useState({
         name: 'Alex Worker',
         title: 'Frontend Developer',
+        address: '456 Elm St, Los Angeles, CA 90210',
         bio: 'Experienced Frontend Developer with a passion for creating responsive and intuitive user interfaces. Proficient in React, JavaScript, and modern CSS frameworks. I deliver high-quality code and pay attention to detail.',
     });
 
@@ -31,7 +32,8 @@ const WorkerProfile = () => {
                             <img src={avatar} className="rounded-circle img-thumbnail" alt="Profile" style={{ width: '150px', height: '150px' }} />
                         </div>
                         <h4 className="fw-bold mb-1">{profileData.name}</h4>
-                        <p className="text-muted mb-2">{profileData.title}</p>
+                        <p className="text-muted mb-1">{profileData.title}</p>
+                        <p className="text-muted mb-2" style={{ fontSize: '0.8rem' }}>{profileData.address}</p>
                         <div className="d-flex justify-content-center gap-2 mb-4">
                             <span className="badge bg-light text-dark border">React</span>
                             <span className="badge bg-light text-dark border">Node.js</span>

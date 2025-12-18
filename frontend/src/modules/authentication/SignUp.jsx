@@ -73,9 +73,13 @@ const SignUp = () => {
                                         <label htmlFor="password" className="form-label fw-semibold">Password</label>
                                         <input type="password" className="form-control bg-light" id="password" placeholder="••••••••" required />
                                     </div>
-                                    <div className="mb-4">
+                                    <div className="mb-3">
                                         <label htmlFor="confirmPassword" className="form-label fw-semibold">Confirm Password</label>
                                         <input type="password" className="form-control bg-light" id="confirmPassword" placeholder="••••••••" required />
+                                    </div>
+                                    <div className="mb-4">
+                                        <label htmlFor="address" className="form-label fw-semibold">Address</label>
+                                        <input type="text" className="form-control bg-light" id="address" placeholder="123 Main St, New York, NY 10001" required />
                                     </div>
 
                                     <div className="form-check mb-4">
