@@ -58,11 +58,11 @@ const SignUp = () => {
                                     <div className="row mb-3">
                                         <div className="col-6">
                                             <label htmlFor="firstName" className="form-label fw-semibold">First Name</label>
-                                            <input type="text" className="form-control bg-light" id="firstName" placeholder="Rajesh" required />
+                                            <input type="text" className="form-control bg-light" id="firstName" placeholder="Enter first name" required />
                                         </div>
                                         <div className="col-6">
                                             <label htmlFor="lastName" className="form-label fw-semibold">Last Name</label>
-                                            <input type="text" className="form-control bg-light" id="lastName" placeholder="Kumar" required />
+                                            <input type="text" className="form-control bg-light" id="lastName" placeholder="Enter last name" required />
                                         </div>
                                     </div>
                                     <div className="mb-3">
@@ -71,15 +71,15 @@ const SignUp = () => {
                                     </div>
                                     <div className="mb-3">
                                         <label htmlFor="email" className="form-label fw-semibold">Email Address</label>
-                                        <input type="email" className="form-control bg-light" id="email" placeholder="rajesh@example.com" required />
+                                        <input type="email" className="form-control bg-light" id="email" placeholder="Enter email address" required />
                                     </div>
                                     <div className="mb-3">
                                         <label htmlFor="password" className="form-label fw-semibold">Password</label>
-                                        <input type="password" className="form-control bg-light" id="password" placeholder="••••••••" required />
+                                        <input type="password" className="form-control bg-light" id="password" placeholder="Enter password" required />
                                     </div>
                                     <div className="mb-4">
                                         <label htmlFor="confirmPassword" className="form-label fw-semibold">Confirm Password</label>
-                                        <input type="password" className="form-control bg-light" id="confirmPassword" placeholder="••••••••" required />
+                                        <input type="password" className="form-control bg-light" id="confirmPassword" placeholder="Enter confirm password" required />
                                     </div>
 
                                     <div className="form-check mb-4">

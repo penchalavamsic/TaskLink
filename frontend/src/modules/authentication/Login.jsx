@@ -35,13 +35,13 @@ const Login = () => {
                                 <form onSubmit={handleLogin}>
                                     <div className="mb-3">
                                         <label htmlFor="email" className="form-label fw-semibold">Email Address</label>
-                                        <input type="email" className="form-control bg-light" id="email" placeholder="rajesh@example.com" />
+                                        <input type="email" className="form-control bg-light" id="email" placeholder="Enter email address" />
                                     </div>
                                     <div className="mb-4">
                                         <div className="d-flex justify-content-between align-items-center mb-1">
                                             <label htmlFor="password" className="form-label fw-semibold mb-0">Password</label>
                                         </div>
-                                        <input type="password" className="form-control bg-light" id="password" placeholder="••••••••" />
+                                        <input type="password" className="form-control bg-light" id="password" placeholder="Enter password" />
                                     </div>
 
                                     <div className="mb-4">
