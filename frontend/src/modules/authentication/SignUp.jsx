@@ -67,7 +67,7 @@ const SignUp = () => {
                                     </div>
                                     <div className="mb-3">
                                         <label htmlFor="address" className="form-label fw-semibold">Address</label>
-                                        <input type="text" className="form-control bg-light" id="address" placeholder="e.g. Flat 402, Sunshine Apts, Mumbai" required />
+                                        <input type="text" className="form-control bg-light" id="address" placeholder="Enter complete address" required />
                                     </div>
                                     <div className="mb-3">
                                         <label htmlFor="email" className="form-label fw-semibold">Email Address</label>
