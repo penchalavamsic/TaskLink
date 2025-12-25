@@ -70,7 +70,7 @@ backend/
 │
 ├── src/
 │   ├── main/
-│   │   ├── java/com/yourapp/
+│   │   ├── java/com/tasklink/
 │   │   │   ├── config/                     # Configuration classes
 │   │   │   │   ├── WebConfig.java          # CORS, static resources
 │   │   │   │   └── SecurityConfig.java     # JWT/Security setup (optional)
@@ -125,7 +125,7 @@ backend/
 │   │   │   │   ├── GlobalExceptionHandler.java
 │   │   │   │   └── ResourceNotFoundException.java
 │   │   │   │
-│   │   │   └── YourAppApplication.java     # Main Spring Boot class
+│   │   │   └── TaskLinkApplication.java     # Main Spring Boot class
 │   │   │
 │   │   └── resources/
 │   │       ├── application.properties      # DB + app configuration
