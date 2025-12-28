@@ -1,5 +1,16 @@
 package com.tasklink.backend.model;
 
+import jakarta.persistence.*;
+import lombok.Data;
+
+@Entity
+@Table(name = "tasks")
+@Data
 public class Task {
-    // placeholder - implement fields and methods
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String title;
+    // other fields skipped for build fix
 }
