@@ -6,5 +6,7 @@ import com.tasklink.backend.model.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    // additional query methods (if needed) go here
+    java.util.Optional<User> findByEmail(String email);
+
+    boolean existsByEmail(String email);
 }
