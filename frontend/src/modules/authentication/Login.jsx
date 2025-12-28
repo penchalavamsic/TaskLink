@@ -4,20 +4,51 @@ import Button from '../../components/Button';
 
 const Login = () => {
     const navigate = useNavigate();
-    const [selectedRole, setSelectedRole] = useState(null);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [selectedRole, setSelectedRole] = useState('User');
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
-        if (selectedRole) {
-            if (selectedRole === 'User') {
-                navigate('/user/dashboard');
-            } else if (selectedRole === 'Admin') {
-                navigate('/admin/dashboard');
-            } else if (selectedRole === 'Worker') {
-                navigate('/worker/dashboard'); // Real redirect to worker module
+
+        try {
+            const response = await fetch('http://localhost:8080/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                // Store user data in localStorage
+                localStorage.setItem('user', JSON.stringify(data));
+
+                const userRole = data.role; // Backend role: "User", "Worker", "Admin"
+
+                // Validate selected role matches backend role
+                if (userRole !== selectedRole) {
+                    alert(`Login failed: You are registered as ${userRole}, not ${selectedRole}.`);
+                    return;
+                }
+
+                if (userRole === 'User') {
+                    navigate('/user/dashboard');
+                } else if (userRole === 'Worker') {
+                    navigate('/worker/dashboard');
+                } else if (userRole === 'Admin') {
+                    navigate('/admin/dashboard');
+                } else {
+                    alert('Unknown role: ' + userRole);
+                }
+            } else {
+                alert(data.message || 'Login failed');
             }
-        } else {
-            alert("Please select a role to login.");
+        } catch (error) {
+            console.error('Error during login:', error);
+            alert('An error occurred during login. Please try again.');
         }
     };
 
@@ -33,40 +64,55 @@ const Login = () => {
                                     <p className="text-muted">Choose your role to login</p>
                                 </div>
                                 <form onSubmit={handleLogin}>
+
+
+
                                     <div className="mb-3">
                                         <label htmlFor="email" className="form-label fw-semibold">Email Address</label>
-                                        <input type="email" className="form-control bg-light" id="email" placeholder="Enter email address" />
+                                        <input
+                                            type="email"
+                                            className="form-control bg-light"
+                                            id="email"
+                                            placeholder="Enter email address"
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                        />
                                     </div>
                                     <div className="mb-4">
                                         <div className="d-flex justify-content-between align-items-center mb-1">
                                             <label htmlFor="password" className="form-label fw-semibold mb-0">Password</label>
                                         </div>
-                                        <input type="password" className="form-control bg-light" id="password" placeholder="Enter password" />
+                                        <input
+                                            type="password"
+                                            className="form-control bg-light"
+                                            id="password"
+                                            placeholder="Enter password"
+                                            value={password}
+                                            onChange={(e) => setPassword(e.target.value)}
+                                        />
                                     </div>
-
-                                    <div className="mb-4">
-                                        <label className="form-label fw-semibold d-block mb-3">Login as:</label>
-                                        <div className="row g-2">
-                                            {['User', 'Worker', 'Admin'].map((role) => (
-                                                <div className="col-4" key={role}>
-                                                    <button
-                                                        type="button"
-                                                        className={`btn w-100 py-2 fw-medium ${selectedRole === role ? 'btn-dark' : 'btn-outline-secondary border-0 bg-light text-dark'}`}
-                                                        style={{ borderRadius: '0.5rem', transition: 'all 0.2s' }}
-                                                        onClick={() => setSelectedRole(role)}
-                                                    >
-                                                        {role}
-                                                    </button>
-                                                </div>
-                                            ))}
-                                        </div>
+                                    {/* Role Buttons */}
+                                    <div className="row g-2 mb-4">
+                                        {['User', 'Worker', 'Admin'].map((role) => (
+                                            <div className="col-4" key={role}>
+                                                <button
+                                                    type="button"
+                                                    className={`btn w-100 py-2 border ${selectedRole === role ? 'btn-primary text-dark fw-bold' : 'bg-white text-muted'}`}
+                                                    onClick={() => setSelectedRole(role)}
+                                                    style={{ fontSize: '0.9rem' }}
+                                                >
+                                                    {role}
+                                                </button>
+                                            </div>
+                                        ))}
                                     </div>
 
                                     <div className="d-grid mb-4">
                                         <Button type="submit" variant="primary" className="py-2 fw-bold text-dark">
-                                            Login
+                                            Login as {selectedRole}
                                         </Button>
                                     </div>
+
                                 </form>
                                 <div className="text-center">
                                     <p className="mb-0 text-muted">Don't have an account? <Link to="/signup" className="text-primary fw-bold text-decoration-none">Sign Up</Link></p>
