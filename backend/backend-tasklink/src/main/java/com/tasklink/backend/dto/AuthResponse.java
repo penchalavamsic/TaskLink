@@ -6,7 +6,7 @@ import lombok.Builder;
 @Data
 @Builder
 public class AuthResponse {
-    private Long id;
+    private Long userId;
     private String email;
     private String role; // "User", "Worker", "Admin"
     private String firstName;
