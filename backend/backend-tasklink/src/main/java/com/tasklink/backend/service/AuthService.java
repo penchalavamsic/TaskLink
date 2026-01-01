@@ -54,7 +54,7 @@ public class AuthService {
         }
 
         return AuthResponse.builder()
-                .id(user.getId())
+                .userId(user.getId())
                 .email(user.getEmail())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
