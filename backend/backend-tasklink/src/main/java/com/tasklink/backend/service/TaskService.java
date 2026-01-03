@@ -34,4 +34,19 @@ public class TaskService {
     public List<Task> getAllTasks() {
         return taskRepository.findAll();
     }
+
+    public java.util.Map<String, Object> getDashboardStats(Long userId) {
+        long totalTasks = taskRepository.countByClientId(userId);
+        long inProgress = taskRepository.countByClientIdAndStatus(userId, "IN_PROGRESS");
+        long completed = taskRepository.countByClientIdAndStatus(userId, "COMPLETED");
+        Double spent = taskRepository.sumSpentByClientId(userId);
+
+        java.util.Map<String, Object> stats = new java.util.HashMap<>();
+        stats.put("totalTasks", totalTasks);
+        stats.put("inProgress", inProgress);
+        stats.put("completed", completed);
+        stats.put("spent", spent != null ? spent : 0.0);
+
+        return stats;
+    }
 }
