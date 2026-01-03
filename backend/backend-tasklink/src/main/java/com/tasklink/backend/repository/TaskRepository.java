@@ -10,6 +10,13 @@ import java.util.List;
 public interface TaskRepository extends JpaRepository<Task, Long> {
     List<Task> findByClientId(Long clientId);
 
+    long countByClientId(Long clientId);
+
+    long countByClientIdAndStatus(Long clientId, String status);
+
+    @Query("SELECT SUM(t.budget) FROM Task t WHERE t.clientId = :clientId AND t.status = 'COMPLETED'")
+    Double sumSpentByClientId(@org.springframework.data.repository.query.Param("clientId") Long clientId);
+
     @Query(value = "SELECT id FROM categories WHERE name = :name", nativeQuery = true)
     Integer findCategoryIdByName(@org.springframework.data.repository.query.Param("name") String name);
 
