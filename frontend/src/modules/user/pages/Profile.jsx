@@ -35,8 +35,8 @@ const Profile = () => {
                         <div className="mb-3">
                             <img src={profileImage} className="rounded-circle img-thumbnail" alt="Profile" style={{ width: '150px', height: '150px', objectFit: 'cover' }} />
                         </div>
-                        <h4 className="fw-bold mb-1">Rajesh Kumar</h4>
-                        <p className="text-muted mb-3">Home Owner & Client</p>
+                        <h4 className="fw-bold mb-1">User Name</h4>
+                        <p className="text-muted mb-3">User Role</p>
                         <div className="d-flex justify-content-center gap-2 mb-3">
                             <input
                                 type="file"
@@ -52,15 +52,15 @@ const Profile = () => {
                         <hr />
                         <div className="d-flex justify-content-around text-start">
                             <div className="text-center">
-                                <h5 className="fw-bold mb-0">24</h5>
+                                <h5 className="fw-bold mb-0">0</h5>
                                 <small className="text-muted">Tasks</small>
                             </div>
                             <div className="text-center">
-                                <h5 className="fw-bold mb-0">4.8</h5>
+                                <h5 className="fw-bold mb-0">0.0</h5>
                                 <small className="text-muted">Rating</small>
                             </div>
                             <div className="text-center">
-                                <h5 className="fw-bold mb-0">12</h5>
+                                <h5 className="fw-bold mb-0">0</h5>
                                 <small className="text-muted">Reviews</small>
                             </div>
                         </div>
@@ -78,30 +78,30 @@ const Profile = () => {
                                 <div className="row mb-3">
                                     <div className="col-md-6">
                                         <label className="form-label fw-semibold">First Name</label>
-                                        <input type="text" className="form-control" defaultValue="Rajesh" />
+                                        <input type="text" className="form-control" placeholder="First Name" />
                                     </div>
                                     <div className="col-md-6">
                                         <label className="form-label fw-semibold">Last Name</label>
-                                        <input type="text" className="form-control" defaultValue="Kumar" />
+                                        <input type="text" className="form-control" placeholder="Last Name" />
                                     </div>
                                 </div>
                                 <div className="row mb-3">
                                     <div className="col-md-6">
                                         <label className="form-label fw-semibold">Email</label>
-                                        <input type="email" className="form-control" defaultValue="rajesh.kumar@example.com" />
+                                        <input type="email" className="form-control" placeholder="name@example.com" />
                                     </div>
                                     <div className="col-md-6">
                                         <label className="form-label fw-semibold">Phone</label>
-                                        <input type="tel" className="form-control" defaultValue="+91 98765 43210" />
+                                        <input type="tel" className="form-control" placeholder="+91 XXXXX XXXXX" />
                                     </div>
                                 </div>
                                 <div className="mb-3">
                                     <label className="form-label fw-semibold">Bio</label>
-                                    <textarea className="form-control" rows="3" defaultValue="Regularly looking for skilled workers for home maintenance and renovation tasks."></textarea>
+                                    <textarea className="form-control" rows="3" placeholder="Tell us about yourself..."></textarea>
                                 </div>
                                 <div className="mb-4">
                                     <label className="form-label fw-semibold">Address</label>
-                                    <input type="text" className="form-control" defaultValue="Flat 402, Sunshine Apartments, Mumbai, Maharashtra 400053" />
+                                    <input type="text" className="form-control" placeholder="Your Address" />
                                 </div>
                                 <div className="text-end">
                                     <Button variant="primary" type="submit">Save Changes</Button>
