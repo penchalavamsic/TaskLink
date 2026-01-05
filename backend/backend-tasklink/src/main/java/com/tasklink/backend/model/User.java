@@ -37,6 +37,9 @@ public class User {
 
     private String phone;
 
+    @Column(columnDefinition = "TEXT")
+    private String bio;
+
     private String address;
 
     @Column(name = "profile_picture_url")

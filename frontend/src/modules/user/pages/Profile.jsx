@@ -14,7 +14,7 @@ const Profile = () => {
         email: '',
         phone: '',
         address: '',
-        about: '' // mapped to 'bio' in UI, handled as transient/ignored by backend for now if field missing
+        bio: ''
     });
 
     // State for dashboard stats (task count)
@@ -45,7 +45,7 @@ const Profile = () => {
                         email: data.email || '',
                         phone: data.phone || '',
                         address: data.address || '',
-                        about: '' // 'about' field not yet in backend User entity, keeping empty/local
+                        bio: data.bio || ''
                     });
                 }
 
@@ -94,13 +94,10 @@ const Profile = () => {
             if (userStr) {
                 const user = JSON.parse(userStr);
 
-                // Exclude 'about' if backend doesn't support it to avoid 400 Bad Request
-                const { about, ...payload } = userData;
-
                 const response = await fetch(`http://localhost:8080/api/user/${user.userId}/profile`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
+                    body: JSON.stringify(userData)
                 });
 
                 if (response.ok) {
@@ -222,8 +219,8 @@ const Profile = () => {
                                         className="form-control"
                                         rows="3"
                                         placeholder="Tell us about yourself..."
-                                        name="about"
-                                        value={userData.about}
+                                        name="bio"
+                                        value={userData.bio}
                                         onChange={handleInputChange}
                                     ></textarea>
                                 </div>
