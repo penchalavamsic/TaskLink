@@ -102,6 +102,11 @@ const Profile = () => {
 
                 if (response.ok) {
                     alert("Changes Saved Successfully!");
+                    // Update local storage to reflect changes immediately in Header
+                    const updatedUser = { ...user, firstName: userData.firstName, lastName: userData.lastName };
+                    localStorage.setItem('user', JSON.stringify(updatedUser));
+                    // Dispatch event for Header to listener
+                    window.dispatchEvent(new Event('user-info-updated'));
                 } else {
                     alert("Failed to save changes.");
                 }
