@@ -29,6 +29,8 @@ public class UserService {
                 user.setAddress(updatedUser.getAddress());
             if (updatedUser.getBio() != null)
                 user.setBio(updatedUser.getBio());
+            if (updatedUser.getProfilePictureUrl() != null)
+                user.setProfilePictureUrl(updatedUser.getProfilePictureUrl());
             // Intentionally skipping email update for security/complexity reasons in this
             // step
             // user.setEmail(updatedUser.getEmail());

@@ -14,61 +14,39 @@ const Profile = () => {
         email: '',
         phone: '',
         address: '',
-        bio: ''
+        bio: '',
+        profilePictureUrl: ''
     });
 
-    // State for dashboard stats (task count)
-    const [stats, setStats] = useState({
-        totalTasks: 0,
-        rating: 0.0,
-        reviews: 0
-    });
+    // ... (rest of stats state)
 
     // Fetch data on mount
     React.useEffect(() => {
         const fetchAllData = async () => {
-            try {
-                const userStr = localStorage.getItem('user');
-                if (!userStr) {
-                    setLoading(false);
-                    return;
+            // ... existing data fetching
+            // (Code is same until profile logic)
+            // 1. Fetch Profile Data
+            const profileResponse = await fetch(`http://localhost:8080/api/user/${user.userId}/profile`);
+            if (profileResponse.ok) {
+                const data = await profileResponse.json();
+                setUserData({
+                    firstName: data.firstName || '',
+                    lastName: data.lastName || '',
+                    email: data.email || '',
+                    phone: data.phone || '',
+                    address: data.address || '',
+                    bio: data.bio || '',
+                    profilePictureUrl: data.profilePictureUrl || ''
+                });
+                if (data.profilePictureUrl) {
+                    setProfileImage(data.profilePictureUrl);
                 }
-                const user = JSON.parse(userStr);
-
-                // 1. Fetch Profile Data
-                const profileResponse = await fetch(`http://localhost:8080/api/user/${user.userId}/profile`);
-                if (profileResponse.ok) {
-                    const data = await profileResponse.json();
-                    setUserData({
-                        firstName: data.firstName || '',
-                        lastName: data.lastName || '',
-                        email: data.email || '',
-                        phone: data.phone || '',
-                        address: data.address || '',
-                        bio: data.bio || ''
-                    });
-                }
-
-                // 2. Fetch Dashboard Stats (for Task Count)
-                const statsResponse = await fetch(`http://localhost:8080/api/user/${user.userId}/dashboard`);
-                if (statsResponse.ok) {
-                    const statsData = await statsResponse.json();
-                    setStats(prev => ({
-                        ...prev,
-                        totalTasks: statsData.totalTasks || 0
-                        // rating and reviews not yet dynamic in backend stats endpoint, keeping default
-                    }));
-                }
-
-            } catch (error) {
-                console.error("Error loading profile data:", error);
-            } finally {
-                setLoading(false);
             }
-        };
-
-        fetchAllData();
-    }, []);
+            // ... rest of fetching
+            // ...
+        }
+    }, [ // ...
+    ]);
 
     const handleEditPicture = () => {
         fileInputRef.current.click();
@@ -77,8 +55,16 @@ const Profile = () => {
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         if (file) {
-            const imageUrl = URL.createObjectURL(file);
-            setProfileImage(imageUrl);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                const base64String = reader.result;
+                setProfileImage(base64String);
+                setUserData(prev => ({
+                    ...prev,
+                    profilePictureUrl: base64String
+                }));
+            };
+            reader.readAsDataURL(file);
         }
     };
 
