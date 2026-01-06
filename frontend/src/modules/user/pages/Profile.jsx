@@ -23,30 +23,51 @@ const Profile = () => {
     // Fetch data on mount
     React.useEffect(() => {
         const fetchAllData = async () => {
-            // ... existing data fetching
-            // (Code is same until profile logic)
-            // 1. Fetch Profile Data
-            const profileResponse = await fetch(`http://localhost:8080/api/user/${user.userId}/profile`);
-            if (profileResponse.ok) {
-                const data = await profileResponse.json();
-                setUserData({
-                    firstName: data.firstName || '',
-                    lastName: data.lastName || '',
-                    email: data.email || '',
-                    phone: data.phone || '',
-                    address: data.address || '',
-                    bio: data.bio || '',
-                    profilePictureUrl: data.profilePictureUrl || ''
-                });
-                if (data.profilePictureUrl) {
-                    setProfileImage(data.profilePictureUrl);
+            try {
+                const userStr = localStorage.getItem('user');
+                if (!userStr) {
+                    setLoading(false);
+                    return;
                 }
+                const user = JSON.parse(userStr);
+
+                // 1. Fetch Profile Data
+                const profileResponse = await fetch(`http://localhost:8080/api/user/${user.userId}/profile`);
+                if (profileResponse.ok) {
+                    const data = await profileResponse.json();
+                    setUserData({
+                        firstName: data.firstName || '',
+                        lastName: data.lastName || '',
+                        email: data.email || '',
+                        phone: data.phone || '',
+                        address: data.address || '',
+                        bio: data.bio || '',
+                        profilePictureUrl: data.profilePictureUrl || ''
+                    });
+                    if (data.profilePictureUrl) {
+                        setProfileImage(data.profilePictureUrl);
+                    }
+                }
+
+                // 2. Fetch Dashboard Stats
+                const statsResponse = await fetch(`http://localhost:8080/api/user/${user.userId}/dashboard`);
+                if (statsResponse.ok) {
+                    const statsData = await statsResponse.json();
+                    setStats(prev => ({
+                        ...prev,
+                        totalTasks: statsData.totalTasks || 0
+                    }));
+                }
+
+            } catch (error) {
+                console.error("Error loading profile data:", error);
+            } finally {
+                setLoading(false);
             }
-            // ... rest of fetching
-            // ...
-        }
-    }, [ // ...
-    ]);
+        };
+
+        fetchAllData();
+    }, []);
 
     const handleEditPicture = () => {
         fileInputRef.current.click();
@@ -103,7 +124,19 @@ const Profile = () => {
         }
     };
 
-    if (loading) return <div className="text-center p-5">Loading...</div>;
+    // Safety timeout for loading
+    React.useEffect(() => {
+        const timer = setTimeout(() => setLoading(false), 2000); // Stop loading after 2s anyway
+        return () => clearTimeout(timer);
+    }, []);
+
+    if (loading) return (
+        <div className="d-flex justify-content-center align-items-center p-5">
+            <div className="spinner-border text-primary" role="status">
+                <span className="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    );
 
     return (
         <div className="container-fluid p-0">
