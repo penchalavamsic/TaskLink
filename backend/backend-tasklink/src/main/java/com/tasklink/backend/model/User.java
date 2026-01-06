@@ -42,7 +42,7 @@ public class User {
 
     private String address;
 
-    @Column(name = "profile_picture_url")
+    @Column(name = "profile_picture_url", columnDefinition = "LONGTEXT")
     private String profilePictureUrl;
 
     @Column(name = "joined_at", insertable = false, updatable = false)
