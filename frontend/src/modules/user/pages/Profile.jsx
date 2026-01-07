@@ -8,6 +8,7 @@ const Profile = () => {
     const [loading, setLoading] = useState(true);
 
     // State for user profile data
+    // State for user profile data
     const [userData, setUserData] = useState({
         firstName: '',
         lastName: '',
@@ -15,7 +16,7 @@ const Profile = () => {
         phone: '',
         address: '',
         bio: '',
-        profilePictureUrl: ''
+        // profilePictureUrl: '' // Commented out
     });
 
     // ... (rest of stats state)
@@ -42,11 +43,11 @@ const Profile = () => {
                         phone: data.phone || '',
                         address: data.address || '',
                         bio: data.bio || '',
-                        profilePictureUrl: data.profilePictureUrl || ''
+                        // profilePictureUrl: data.profilePictureUrl || '' // Commented out
                     });
-                    if (data.profilePictureUrl) {
-                        setProfileImage(data.profilePictureUrl);
-                    }
+                    // if (data.profilePictureUrl) { // Commented out
+                    //     setProfileImage(data.profilePictureUrl);
+                    // }
                 }
 
                 // 2. Fetch Dashboard Stats
@@ -69,25 +70,25 @@ const Profile = () => {
         fetchAllData();
     }, []);
 
-    const handleEditPicture = () => {
-        fileInputRef.current.click();
-    };
+    // const handleEditPicture = () => { // Commented out
+    //     fileInputRef.current.click();
+    // };
 
-    const handleFileChange = (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                const base64String = reader.result;
-                setProfileImage(base64String);
-                setUserData(prev => ({
-                    ...prev,
-                    profilePictureUrl: base64String
-                }));
-            };
-            reader.readAsDataURL(file);
-        }
-    };
+    // const handleFileChange = (event) => { // Commented out
+    //     const file = event.target.files[0];
+    //     if (file) {
+    //         const reader = new FileReader();
+    //         reader.onloadend = () => {
+    //             const base64String = reader.result;
+    //             setProfileImage(base64String);
+    //             setUserData(prev => ({
+    //                 ...prev,
+    //                 profilePictureUrl: base64String
+    //             }));
+    //         };
+    //         reader.readAsDataURL(file);
+    //     }
+    // };
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -147,12 +148,12 @@ const Profile = () => {
                     {/* Profile Card */}
                     <div className="card border-0 shadow-sm text-center p-4">
                         <div className="mb-3">
-                            <img src={profileImage} className="rounded-circle img-thumbnail" alt="Profile" style={{ width: '150px', height: '150px', objectFit: 'cover' }} />
+                            <img src={avatar} className="rounded-circle img-thumbnail" alt="Profile" style={{ width: '150px', height: '150px', objectFit: 'cover' }} /> {/* Reverted to avatar */}
                         </div>
                         <h4 className="fw-bold mb-1">{userData.firstName} {userData.lastName}</h4>
                         <p className="text-muted mb-3">User</p>
                         <div className="d-flex justify-content-center gap-2 mb-3">
-                            <input
+                            {/* <input
                                 type="file"
                                 ref={fileInputRef}
                                 style={{ display: 'none' }}
@@ -161,7 +162,7 @@ const Profile = () => {
                             />
                             <Button variant="outline-primary" size="sm" onClick={handleEditPicture}>
                                 <i className="bi bi-pencil-square me-1"></i> Edit Picture
-                            </Button>
+                            </Button> */}
                         </div>
                         <hr />
                         <div className="d-flex justify-content-around text-start">

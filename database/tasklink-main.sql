@@ -159,4 +159,4 @@ CREATE TABLE worker_skills (
         ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 select * from users;
-
+select * from tasks;
