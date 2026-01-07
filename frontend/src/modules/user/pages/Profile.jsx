@@ -8,18 +8,21 @@ const Profile = () => {
     const [loading, setLoading] = useState(true);
 
     // State for user profile data
-    // State for user profile data
     const [userData, setUserData] = useState({
         firstName: '',
         lastName: '',
         email: '',
         phone: '',
         address: '',
-        bio: '',
-        // profilePictureUrl: '' // Commented out
+        bio: ''
     });
 
-    // ... (rest of stats state)
+    // State for dashboard stats (task count)
+    const [stats, setStats] = useState({
+        totalTasks: 0,
+        rating: 0.0,
+        reviews: 0
+    });
 
     // Fetch data on mount
     React.useEffect(() => {
@@ -42,12 +45,8 @@ const Profile = () => {
                         email: data.email || '',
                         phone: data.phone || '',
                         address: data.address || '',
-                        bio: data.bio || '',
-                        // profilePictureUrl: data.profilePictureUrl || '' // Commented out
+                        bio: data.bio || ''
                     });
-                    // if (data.profilePictureUrl) { // Commented out
-                    //     setProfileImage(data.profilePictureUrl);
-                    // }
                 }
 
                 // 2. Fetch Dashboard Stats
@@ -69,26 +68,6 @@ const Profile = () => {
 
         fetchAllData();
     }, []);
-
-    // const handleEditPicture = () => { // Commented out
-    //     fileInputRef.current.click();
-    // };
-
-    // const handleFileChange = (event) => { // Commented out
-    //     const file = event.target.files[0];
-    //     if (file) {
-    //         const reader = new FileReader();
-    //         reader.onloadend = () => {
-    //             const base64String = reader.result;
-    //             setProfileImage(base64String);
-    //             setUserData(prev => ({
-    //                 ...prev,
-    //                 profilePictureUrl: base64String
-    //             }));
-    //         };
-    //         reader.readAsDataURL(file);
-    //     }
-    // };
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
