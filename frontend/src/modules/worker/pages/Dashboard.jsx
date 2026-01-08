@@ -3,14 +3,46 @@ import StatCard from '../../../components/StatCard';
 import Button from '../../../components/Button';
 
 const Dashboard = () => {
-    const stats = [
-        { title: 'Total Earnings', value: '₹0', icon: 'bi bi-cash-stack', color: 'success' },
-        { title: 'Jobs Completed', value: '0', icon: 'bi bi-check-circle-fill', color: 'primary' },
-        { title: 'Active Bids', value: '0', icon: 'bi bi-hourglass-split', color: 'warning' },
-        { title: 'Rating', value: '0.0', icon: 'bi bi-star-fill', color: 'info' },
-    ];
+    const [statsData, setStatsData] = React.useState({
+        totalEarnings: 0,
+        jobsCompleted: 0,
+        activeBids: 0,
+        rating: 0
+    });
+    const [recentJobs, setRecentJobs] = React.useState([]);
 
-    const recentJobs = [];
+    React.useEffect(() => {
+        const fetchDashboardData = async () => {
+            try {
+                const userStr = localStorage.getItem('user');
+                if (!userStr) return;
+                const user = JSON.parse(userStr);
+
+                const response = await fetch(`http://localhost:8080/api/worker/${user.id}/dashboard-stats`);
+                if (response.ok) {
+                    const data = await response.json();
+                    setStatsData({
+                        totalEarnings: data.totalEarnings,
+                        jobsCompleted: data.jobsCompleted,
+                        activeBids: data.activeBids,
+                        rating: data.rating
+                    });
+                    setRecentJobs(data.recentJobs || []);
+                }
+            } catch (error) {
+                console.error("Failed to fetch dashboard stats", error);
+            }
+        };
+
+        fetchDashboardData();
+    }, []);
+
+    const stats = [
+        { title: 'Total Earnings', value: `₹${statsData.totalEarnings}`, icon: 'bi bi-cash-stack', color: 'success' },
+        { title: 'Jobs Completed', value: statsData.jobsCompleted.toString(), icon: 'bi bi-check-circle-fill', color: 'primary' },
+        { title: 'Active Bids', value: statsData.activeBids.toString(), icon: 'bi bi-hourglass-split', color: 'warning' },
+        { title: 'Rating', value: statsData.rating.toFixed(1), icon: 'bi bi-star-fill', color: 'info' },
+    ];
 
     return (
         <div className="container-fluid p-0">
@@ -48,11 +80,11 @@ const Dashboard = () => {
                                         {recentJobs.map(job => (
                                             <tr key={job.id}>
                                                 <td className="fw-semibold">{job.title}</td>
-                                                <td>{job.client}</td>
-                                                <td>{job.date}</td>
-                                                <td className="fw-bold text-success">{job.amount}</td>
+                                                <td>{job.clientName || 'Client #' + job.clientId}</td>
+                                                <td>{job.createdAt ? new Date(job.createdAt).toLocaleDateString() : 'N/A'}</td>
+                                                <td className="fw-bold text-success">₹{job.budget}</td>
                                                 <td>
-                                                    <span className={`badge ${job.status === 'Completed' ? 'bg-success' : 'bg-primary'}`}>
+                                                    <span className={`badge ${job.status === 'COMPLETED' ? 'bg-success' : 'bg-primary'}`}>
                                                         {job.status}
                                                     </span>
                                                 </td>
