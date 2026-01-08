@@ -4,16 +4,13 @@ import Button from '../../../components/Button';
 
 const Dashboard = () => {
     const stats = [
-        { title: 'Total Earnings', value: '₹1,250', icon: 'bi bi-cash-stack', color: 'success' },
-        { title: 'Jobs Completed', value: '18', icon: 'bi bi-check-circle-fill', color: 'primary' },
-        { title: 'Active Bids', value: '5', icon: 'bi bi-hourglass-split', color: 'warning' },
-        { title: 'Rating', value: '4.8', icon: 'bi bi-star-fill', color: 'info' },
+        { title: 'Total Earnings', value: '₹0', icon: 'bi bi-cash-stack', color: 'success' },
+        { title: 'Jobs Completed', value: '0', icon: 'bi bi-check-circle-fill', color: 'primary' },
+        { title: 'Active Bids', value: '0', icon: 'bi bi-hourglass-split', color: 'warning' },
+        { title: 'Rating', value: '0.0', icon: 'bi bi-star-fill', color: 'info' },
     ];
 
-    const recentJobs = [
-        { id: 1, title: 'Logo Design', client: 'TechCorp Inc.', date: 'Oct 25, 2023', amount: '₹200', status: 'Completed' },
-        { id: 2, title: 'React Frontend Fix', client: 'StartUp Hub', date: 'Oct 28, 2023', amount: '₹150', status: 'In Progress' },
-    ];
+    const recentJobs = [];
 
     return (
         <div className="container-fluid p-0">
