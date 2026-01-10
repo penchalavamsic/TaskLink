@@ -25,11 +25,17 @@ public class Task {
     @com.fasterxml.jackson.annotation.JsonProperty("category")
     private String categoryInput;
 
+    @Transient
+    private String clientName;
+
     private Double budget;
     private LocalDate deadline;
 
     @Column(name = "client_id")
     private Long clientId;
+
+    @Column(name = "worker_id")
+    private Long workerId;
 
     private String status;
 
