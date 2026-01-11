@@ -6,5 +6,5 @@ import com.tasklink.backend.model.Bid;
 
 @Repository
 public interface BidRepository extends JpaRepository<Bid, Long> {
-    // custom bid queries can be added here
+    long countByWorkerIdAndStatus(Long workerId, String status);
 }
