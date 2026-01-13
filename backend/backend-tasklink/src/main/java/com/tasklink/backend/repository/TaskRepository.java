@@ -23,4 +23,11 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     @org.springframework.data.jpa.repository.Modifying
     @Query(value = "INSERT INTO categories (name) VALUES (:name)", nativeQuery = true)
     void createCategory(@org.springframework.data.repository.query.Param("name") String name);
+
+    long countByWorkerIdAndStatus(Long workerId, String status);
+
+    @Query("SELECT SUM(t.budget) FROM Task t WHERE t.workerId = :workerId AND t.status = 'COMPLETED'")
+    Double sumEarningsByWorkerId(@org.springframework.data.repository.query.Param("workerId") Long workerId);
+
+    List<Task> findByWorkerId(Long workerId);
 }
