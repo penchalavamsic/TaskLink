@@ -10,6 +10,7 @@ import com.tasklink.backend.service.WorkerService;
 
 @RestController
 @RequestMapping("/api/worker")
+@org.springframework.web.bind.annotation.CrossOrigin(origins = "http://localhost:5173")
 public class WorkerController {
 
     @Autowired
@@ -28,6 +29,10 @@ public class WorkerController {
     @org.springframework.web.bind.annotation.PutMapping("/{id}/profile")
     public ResponseEntity<?> updateProfile(@PathVariable Long id,
             @org.springframework.web.bind.annotation.RequestBody com.tasklink.backend.model.Worker worker) {
-        return ResponseEntity.ok(workerService.update(id, worker));
+        try {
+            return ResponseEntity.ok(workerService.update(id, worker));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error updating profile: " + e.getMessage());
+        }
     }
 }

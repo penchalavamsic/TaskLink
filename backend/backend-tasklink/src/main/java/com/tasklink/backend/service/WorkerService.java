@@ -39,12 +39,33 @@ public class WorkerService {
         return workerRepository.save(worker);
     }
 
-    public Worker update(Long id, Worker worker) {
-        if (workerRepository.existsById(id)) {
-            worker.setId(id);
-            return workerRepository.save(worker);
-        }
-        return null;
+    @org.springframework.transaction.annotation.Transactional
+    public Worker update(Long id, Worker workerInput) {
+        // 1. Fetch existing User
+        com.tasklink.backend.model.User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // REMOVED: Updating User fields (Name, Phone, Address, Bio) from Worker update
+        // logic
+        // This ensures Worker Profile updates do no overwrite User/Client identity.
+
+        // 2. Fetch existing Worker or Create New
+        Worker workerToSave = workerRepository.findById(id).orElseGet(() -> {
+            Worker newWorker = new Worker();
+            newWorker.setUser(user);
+            // newWorker.setId(id); // With @MapsId, avoiding manual ID setting sometimes
+            // helps
+            return newWorker;
+        });
+
+        // 3. Update Worker Fields
+        workerToSave.setProfessionTitle(workerInput.getProfessionTitle());
+        workerToSave.setBio(workerInput.getBio());
+
+        // Ensure relationship is set (critical for @MapsId)
+        workerToSave.setUser(user);
+
+        return workerRepository.save(workerToSave);
     }
 
     public void deleteById(Long id) {
