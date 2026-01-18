@@ -19,4 +19,15 @@ public class WorkerController {
     public ResponseEntity<?> getDashboardStats(@PathVariable Long id) {
         return ResponseEntity.ok(workerService.getDashboardStats(id));
     }
+
+    @GetMapping("/{id}/profile")
+    public ResponseEntity<?> getProfile(@PathVariable Long id) {
+        return ResponseEntity.ok(workerService.getProfile(id));
+    }
+
+    @org.springframework.web.bind.annotation.PutMapping("/{id}/profile")
+    public ResponseEntity<?> updateProfile(@PathVariable Long id,
+            @org.springframework.web.bind.annotation.RequestBody com.tasklink.backend.model.Worker worker) {
+        return ResponseEntity.ok(workerService.update(id, worker));
+    }
 }

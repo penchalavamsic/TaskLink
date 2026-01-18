@@ -87,4 +87,19 @@ public class WorkerService {
 
         return stats;
     }
+
+    public Worker getProfile(Long id) {
+        return workerRepository.findById(id).orElseGet(() -> {
+            com.tasklink.backend.model.User user = userRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+            return Worker.builder()
+                    .id(id)
+                    .user(user)
+                    .professionTitle("Professional Worker")
+                    .bio(user.getBio() != null ? user.getBio() : "No bio available")
+                    .totalEarnings(java.math.BigDecimal.ZERO)
+                    .averageRating(java.math.BigDecimal.ZERO)
+                    .build();
+        });
+    }
 }
