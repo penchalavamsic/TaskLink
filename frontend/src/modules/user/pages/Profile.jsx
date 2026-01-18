@@ -37,17 +37,19 @@ const Profile = () => {
 
                 // 1. Fetch Profile Data
                 const profileResponse = await fetch(`http://localhost:8080/api/user/${user.userId}/profile`);
+                let profile = {};
                 if (profileResponse.ok) {
-                    const data = await profileResponse.json();
-                    setUserData({
-                        firstName: data.firstName || '',
-                        lastName: data.lastName || '',
-                        email: data.email || '',
-                        phone: data.phone || '',
-                        address: data.address || '',
-                        bio: data.bio || ''
-                    });
+                    profile = await profileResponse.json();
                 }
+
+                setUserData({
+                    firstName: user.firstName || profile.firstName || '',
+                    lastName: user.lastName || profile.lastName || '',
+                    email: user.email || profile.email || '',
+                    phone: profile.phone || '',
+                    address: profile.address || '',
+                    bio: profile.bio || ''
+                });
 
                 // 2. Fetch Dashboard Stats
                 const statsResponse = await fetch(`http://localhost:8080/api/user/${user.userId}/dashboard`);

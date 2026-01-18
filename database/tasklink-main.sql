@@ -160,3 +160,17 @@ CREATE TABLE worker_skills (
 ) ENGINE=InnoDB;
 select * from users;
 select * from tasks;
+TRUNCATE TABLE users;
+SET FOREIGN_KEY_CHECKS = 0;
+
+TRUNCATE TABLE worker_documents;
+TRUNCATE TABLE worker_skills;
+TRUNCATE TABLE bids;
+TRUNCATE TABLE reviews;
+TRUNCATE TABLE tasks;
+TRUNCATE TABLE worker_profiles;
+TRUNCATE TABLE users;
+TRUNCATE TABLE categories;
+TRUNCATE TABLE skills;
+
+SET FOREIGN_KEY_CHECKS = 1;
