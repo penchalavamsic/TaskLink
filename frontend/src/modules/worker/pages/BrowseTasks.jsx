@@ -3,8 +3,35 @@ import TaskCard from '../../../components/TaskCard';
 
 const BrowseTasks = () => {
     // Mock data
-    // Mock data removed
-    const tasks = [];
+    const [tasks, setTasks] = useState([]);
+
+    React.useEffect(() => {
+        const fetchTasks = async () => {
+            try {
+                const response = await fetch('http://localhost:8080/api/tasks/all');
+                if (response.ok) {
+                    const data = await response.json();
+
+                    // Transform backend data to frontend model
+                    const formattedTasks = data
+                        .filter(t => t.status === 'OPEN') // Only show open tasks
+                        .map(t => ({
+                            id: t.id,
+                            title: t.title,
+                            description: t.description,
+                            status: t.status,
+                            budget: `₹${t.budget}`,
+                            date: t.createdAt ? new Date(t.createdAt).toLocaleDateString() : 'N/A',
+                            category: t.category || 'General' // Use category mapped from backend
+                        }));
+                    setTasks(formattedTasks);
+                }
+            } catch (error) {
+                console.error("Error fetching tasks:", error);
+            }
+        };
+        fetchTasks();
+    }, []);
 
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('All Categories');

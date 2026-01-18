@@ -30,4 +30,7 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     Double sumEarningsByWorkerId(@org.springframework.data.repository.query.Param("workerId") Long workerId);
 
     List<Task> findByWorkerId(Long workerId);
+
+    @Query(value = "SELECT name FROM categories WHERE id = :id", nativeQuery = true)
+    String findCategoryNameById(@org.springframework.data.repository.query.Param("id") Integer id);
 }
