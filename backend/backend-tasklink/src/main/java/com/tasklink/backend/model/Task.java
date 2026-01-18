@@ -28,6 +28,12 @@ public class Task {
     @Transient
     private String clientName;
 
+    @Transient
+    private String clientAddress;
+
+    @Transient
+    private String clientPhone;
+
     private Double budget;
     private LocalDate deadline;
 

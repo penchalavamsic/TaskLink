@@ -31,12 +31,22 @@ public class TaskService {
         return taskRepository.findByClientId(clientId);
     }
 
+    @Autowired
+    private com.tasklink.backend.repository.UserRepository userRepository;
+
     public List<Task> getAllTasks() {
         List<Task> tasks = taskRepository.findAll();
         tasks.forEach(task -> {
             if (task.getCategoryId() != null) {
                 String catName = taskRepository.findCategoryNameById(task.getCategoryId());
                 task.setCategoryInput(catName);
+            }
+            if (task.getClientId() != null) {
+                userRepository.findById(task.getClientId()).ifPresent(user -> {
+                    task.setClientName(user.getFirstName() + " " + user.getLastName());
+                    task.setClientAddress(user.getAddress());
+                    task.setClientPhone(user.getPhone());
+                });
             }
         });
         return tasks;
