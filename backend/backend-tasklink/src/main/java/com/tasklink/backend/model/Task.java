@@ -29,6 +29,9 @@ public class Task {
     private String clientName;
 
     @Transient
+    private String workerName;
+
+    @Transient
     private String clientAddress;
 
     @Transient
