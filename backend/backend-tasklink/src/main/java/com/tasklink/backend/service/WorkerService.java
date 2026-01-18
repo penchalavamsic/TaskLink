@@ -62,8 +62,8 @@ public class WorkerService {
         long completedJobs = taskRepository.countByWorkerIdAndStatus(workerId, "COMPLETED");
         stats.put("jobsCompleted", completedJobs);
 
-        // 3. Active Bids (assuming 'PENDING' status)
-        long activeBids = bidRepository.countByWorkerIdAndStatus(workerId, "PENDING");
+        // 3. Active Bids (Mapped to Active Jobs / In Progress Tasks)
+        long activeBids = taskRepository.countByWorkerIdAndStatus(workerId, "IN_PROGRESS");
         stats.put("activeBids", activeBids);
 
         // 4. Rating
