@@ -28,7 +28,15 @@ public class TaskService {
     }
 
     public List<Task> getTasksByClientId(Long clientId) {
-        return taskRepository.findByClientId(clientId);
+        List<Task> tasks = taskRepository.findByClientId(clientId);
+        tasks.forEach(task -> {
+            if (task.getWorkerId() != null) {
+                userRepository.findById(task.getWorkerId()).ifPresent(worker -> {
+                    task.setWorkerName(worker.getFirstName() + " " + worker.getLastName());
+                });
+            }
+        });
+        return tasks;
     }
 
     @Autowired
@@ -50,6 +58,16 @@ public class TaskService {
             }
         });
         return tasks;
+    }
+
+    public Task acceptTask(Long taskId, Long workerId) {
+        Task task = taskRepository.findById(taskId).orElseThrow(() -> new RuntimeException("Task not found"));
+        if (!"OPEN".equals(task.getStatus())) {
+            throw new RuntimeException("Task is not open for acceptance");
+        }
+        task.setWorkerId(workerId);
+        task.setStatus("IN_PROGRESS");
+        return taskRepository.save(task);
     }
 
     public java.util.Map<String, Object> getDashboardStats(Long userId) {
