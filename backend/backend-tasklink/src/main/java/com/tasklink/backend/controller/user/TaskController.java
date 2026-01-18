@@ -46,4 +46,9 @@ public class TaskController {
             return ResponseEntity.badRequest().body("Error accepting task: " + e.getMessage());
         }
     }
+
+    @GetMapping("/worker/{workerId}")
+    public ResponseEntity<List<Task>> getTasksByWorker(@PathVariable Long workerId) {
+        return ResponseEntity.ok(taskService.getTasksByWorkerId(workerId));
+    }
 }
