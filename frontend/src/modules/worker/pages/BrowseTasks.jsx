@@ -3,14 +3,8 @@ import TaskCard from '../../../components/TaskCard';
 
 const BrowseTasks = () => {
     // Mock data
-    const tasks = [
-        { id: 1, title: 'Fix Leaking Kitchen Tap', description: 'Repair the dripping faucet in the main kitchen sink.', status: 'Open', budget: '₹450', date: 'Oct 24, 2023', category: 'Plumbing' },
-        { id: 2, title: 'Paint 2BHK Apartment', description: 'Whitewash and paint walls for the entire apartment.', status: 'Open', budget: '₹12000', date: 'Oct 20, 2023', category: 'Painting' },
-        { id: 3, title: 'Install Ceiling Fan', description: 'Installation of a new high-speed fan in the master bedroom.', status: 'Open', budget: '₹300', date: 'Oct 25, 2023', category: 'Electrical' },
-        { id: 4, title: 'Assemble Wardrobe', description: 'Assembling a 3-door wooden wardrobe from a flat pack.', status: 'Open', budget: '₹850', date: 'Oct 26, 2023', category: 'Carpentry' },
-        { id: 5, title: 'Deep Clean 3 Bathrooms', description: 'Deep cleaning and sanitization of three attached bathrooms.', status: 'Open', budget: '₹1500', date: 'Oct 15, 2023', category: 'Cleaning' },
-        { id: 6, title: 'Repair Window Frame', description: 'Fixing the broken hinge and lock on the balcony window.', status: 'Open', budget: '₹600', date: 'Oct 23, 2023', category: 'Repair' },
-    ];
+    // Mock data removed
+    const tasks = [];
 
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('All Categories');
