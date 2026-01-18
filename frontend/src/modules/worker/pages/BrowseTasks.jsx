@@ -22,7 +22,10 @@ const BrowseTasks = () => {
                             status: t.status,
                             budget: `₹${t.budget}`,
                             date: t.createdAt ? new Date(t.createdAt).toLocaleDateString() : 'N/A',
-                            category: t.category || 'General' // Use category mapped from backend
+                            category: t.category || 'General', // Use category mapped from backend
+                            clientName: t.clientName || 'Unknown Client',
+                            clientAddress: t.clientAddress || 'Not Provided',
+                            clientPhone: t.clientPhone || 'Not Provided'
                         }));
                     setTasks(formattedTasks);
                 }
@@ -71,7 +74,38 @@ const BrowseTasks = () => {
             <div className="row g-4">
                 {filteredTasks.map(task => (
                     <div className="col-md-6 col-lg-4 col-xl-4" key={task.id}>
-                        <TaskCard task={task} detailPath="/worker/task-detail" />
+                        <div className="card h-100 border-0 shadow-sm">
+                            <div className="card-body">
+                                <div className="d-flex justify-content-between align-items-start mb-2">
+                                    <span className="badge bg-success bg-opacity-10 text-success px-3">{task.category}</span>
+                                    <small className="text-muted">{task.date}</small>
+                                </div>
+                                <h5 className="card-title fw-bold">{task.title}</h5>
+                                <p className="card-text text-muted small mb-3">{task.description}</p>
+
+                                <div className="border-top pt-3 mt-3">
+                                    <h6 className="fw-bold small text-uppercase text-muted mb-2">Client Details</h6>
+                                    <div className="d-flex align-items-center mb-2">
+                                        <i className="bi bi-person-fill text-primary me-2"></i>
+                                        <span className="small fw-semibold">{task.clientName}</span>
+                                    </div>
+                                    <div className="d-flex align-items-center mb-2">
+                                        <i className="bi bi-geo-alt-fill text-danger me-2"></i>
+                                        <span className="small">{task.clientAddress}</span>
+                                    </div>
+                                    <div className="d-flex align-items-center">
+                                        <i className="bi bi-telephone-fill text-success me-2"></i>
+                                        <span className="small">{task.clientPhone}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="card-footer bg-white border-top-0 pt-0 pb-3">
+                                <div className="d-flex justify-content-between align-items-center mt-2">
+                                    <span className="fw-bold text-primary fs-5">{task.budget}</span>
+                                    <button className="btn btn-outline-primary btn-sm rounded-pill px-4">View Task</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 ))}
             </div>
