@@ -9,7 +9,8 @@ const TaskCard = ({ task, detailPath = '/user/task-detail' }) => {
         description = "Task description goes here...",
         status = "Open",
         budget = "$0",
-        date = "Today"
+        date = "Today",
+        workerName
     } = task || {};
 
     let statusBadge = "bg-secondary";
@@ -30,10 +31,12 @@ const TaskCard = ({ task, detailPath = '/user/task-detail' }) => {
                 </p>
                 <div className="d-flex justify-content-between align-items-center">
                     <span className="fw-bold text-primary">{budget}</span>
-                    {/* <Link to={`${detailPath}/${id}`} className="btn btn-sm btn-outline-primary rounded-pill px-4">
-                        View Details
-                    </Link> */}
                 </div>
+                {status === "IN_PROGRESS" && workerName && (
+                    <div className="alert alert-info py-1 px-2 mt-2 mb-0 small">
+                        Accepted by <strong>{workerName}</strong>
+                    </div>
+                )}
             </div>
         </div>
     );

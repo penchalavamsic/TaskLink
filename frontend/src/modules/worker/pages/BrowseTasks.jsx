@@ -45,6 +45,34 @@ const BrowseTasks = () => {
         return matchesSearch && matchesCategory;
     });
 
+    const handleAcceptTask = async (taskId) => {
+        if (!window.confirm("Are you sure you want to accept this task?")) return;
+
+        const userStr = localStorage.getItem('user');
+        if (!userStr) {
+            alert("Please login to acceptance task.");
+            return;
+        }
+        const user = JSON.parse(userStr);
+
+        try {
+            const response = await fetch(`http://localhost:8080/api/tasks/${taskId}/accept/${user.userId}`, {
+                method: 'POST'
+            });
+
+            if (response.ok) {
+                alert("Task accepted successfully!");
+                // Remove task from list
+                setTasks(tasks.filter(t => t.id !== taskId));
+            } else {
+                alert("Failed to accept task.");
+            }
+        } catch (error) {
+            console.error("Error accepting task:", error);
+            alert("Error accepting task.");
+        }
+    };
+
     return (
         <div className="container-fluid p-0">
             <div className="d-flex justify-content-between align-items-center mb-4">
@@ -102,7 +130,12 @@ const BrowseTasks = () => {
                             <div className="card-footer bg-white border-top-0 pt-0 pb-3">
                                 <div className="d-flex justify-content-between align-items-center mt-2">
                                     <span className="fw-bold text-primary fs-5">{task.budget}</span>
-                                    <button className="btn btn-outline-primary btn-sm rounded-pill px-4">View Task</button>
+                                    <button
+                                        className="btn btn-outline-primary btn-sm rounded-pill px-4"
+                                        onClick={() => handleAcceptTask(task.id)}
+                                    >
+                                        Accept
+                                    </button>
                                 </div>
                             </div>
                         </div>

@@ -18,7 +18,7 @@ const Dashboard = () => {
                 if (!userStr) return;
                 const user = JSON.parse(userStr);
 
-                const response = await fetch(`http://localhost:8080/api/worker/${user.id}/dashboard-stats`);
+                const response = await fetch(`http://localhost:8080/api/worker/${user.userId}/dashboard-stats`);
                 if (response.ok) {
                     const data = await response.json();
                     setStatsData({
