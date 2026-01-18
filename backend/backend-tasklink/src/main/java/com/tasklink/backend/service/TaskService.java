@@ -39,6 +39,24 @@ public class TaskService {
         return tasks;
     }
 
+    public List<Task> getTasksByWorkerId(Long workerId) {
+        List<Task> tasks = taskRepository.findByWorkerId(workerId);
+        tasks.forEach(task -> {
+            if (task.getClientId() != null) {
+                userRepository.findById(task.getClientId()).ifPresent(user -> {
+                    task.setClientName(user.getFirstName() + " " + user.getLastName());
+                    task.setClientAddress(user.getAddress());
+                    task.setClientPhone(user.getPhone());
+                });
+            }
+            if (task.getCategoryId() != null) {
+                String catName = taskRepository.findCategoryNameById(task.getCategoryId());
+                task.setCategoryInput(catName);
+            }
+        });
+        return tasks;
+    }
+
     @Autowired
     private com.tasklink.backend.repository.UserRepository userRepository;
 
