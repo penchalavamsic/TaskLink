@@ -5,10 +5,49 @@ import avatar from '../../../assets/avatar_placeholder.png';
 const WorkerProfile = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [profileData, setProfileData] = useState({
-        name: 'Raju Mistri',
-        title: 'Professional Plumber',
-        bio: 'Expert plumber with over 8 years of experience in residential and commercial plumbing. I specialize in leak repairs, pipe fitting, and bathroom installations. Efficient, reliable, and available for emergency calls.',
+        name: '',
+        title: '',
+        bio: '',
+        stats: { rating: 0, jobsDone: 0, exp: 0 }
     });
+
+    React.useEffect(() => {
+        const fetchProfile = async () => {
+            const userStr = localStorage.getItem('user');
+            if (!userStr) return;
+            const user = JSON.parse(userStr);
+
+            try {
+                // Fetch Profile
+                const profileRes = await fetch(`http://localhost:8080/api/worker/${user.userId}/profile`);
+                let profile = {};
+                if (profileRes.ok) {
+                    profile = await profileRes.json();
+                }
+
+                // Fetch Stats
+                const statsRes = await fetch(`http://localhost:8080/api/worker/${user.userId}/dashboard-stats`);
+                let stats = { rating: 0, jobsCompleted: 0 };
+                if (statsRes.ok) {
+                    stats = await statsRes.json();
+                }
+
+                setProfileData({
+                    name: (profile.user?.firstName || user.firstName) + ' ' + (profile.user?.lastName || user.lastName),
+                    title: profile.professionTitle || 'Worker',
+                    bio: profile.bio || profile.user?.bio || 'No bio added yet.',
+                    stats: {
+                        rating: stats.rating || 0,
+                        jobsDone: stats.jobsCompleted || 0,
+                        exp: 1 // Hardcoded for now as it's not in DB
+                    }
+                });
+            } catch (error) {
+                console.error("Error fetching profile:", error);
+            }
+        };
+        fetchProfile();
+    }, []);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -75,19 +114,19 @@ const WorkerProfile = () => {
                             <div className="row g-3">
                                 <div className="col-sm-4">
                                     <div className="p-3 bg-light rounded text-center">
-                                        <h3 className="fw-bold mb-0 text-primary">4.8</h3>
+                                        <h3 className="fw-bold mb-0 text-primary">{profileData.stats.rating.toFixed(1)}</h3>
                                         <small className="text-muted">Rating</small>
                                     </div>
                                 </div>
                                 <div className="col-sm-4">
                                     <div className="p-3 bg-light rounded text-center">
-                                        <h3 className="fw-bold mb-0 text-success">154</h3>
+                                        <h3 className="fw-bold mb-0 text-success">{profileData.stats.jobsDone}</h3>
                                         <small className="text-muted">Jobs Done</small>
                                     </div>
                                 </div>
                                 <div className="col-sm-4">
                                     <div className="p-3 bg-light rounded text-center">
-                                        <h3 className="fw-bold mb-0 text-warning">8</h3>
+                                        <h3 className="fw-bold mb-0 text-warning">{profileData.stats.exp}+</h3>
                                         <small className="text-muted">Years Exp</small>
                                     </div>
                                 </div>
