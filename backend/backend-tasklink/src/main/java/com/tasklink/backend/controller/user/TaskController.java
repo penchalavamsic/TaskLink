@@ -36,4 +36,14 @@ public class TaskController {
     public ResponseEntity<List<Task>> getAllTasks() {
         return ResponseEntity.ok(taskService.getAllTasks());
     }
+
+    @PostMapping("/{taskId}/accept/{workerId}")
+    public ResponseEntity<?> acceptTask(@PathVariable Long taskId, @PathVariable Long workerId) {
+        try {
+            Task task = taskService.acceptTask(taskId, workerId);
+            return ResponseEntity.ok(task);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error accepting task: " + e.getMessage());
+        }
+    }
 }
