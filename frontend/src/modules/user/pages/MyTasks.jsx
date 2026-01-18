@@ -27,7 +27,8 @@ const MyTasks = () => {
                         description: task.description,
                         status: task.status, // Assuming backend enum string like 'OPEN', 'IN_PROGRESS' matches or needs CSS adjustment
                         budget: `₹${task.budget}`,
-                        date: new Date(task.deadline).toLocaleDateString()
+                        date: new Date(task.deadline).toLocaleDateString(),
+                        workerName: task.workerName
                     }));
                     setTasks(formattedTasks);
                 }
