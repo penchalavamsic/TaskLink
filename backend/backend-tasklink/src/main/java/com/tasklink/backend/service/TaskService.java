@@ -32,7 +32,14 @@ public class TaskService {
     }
 
     public List<Task> getAllTasks() {
-        return taskRepository.findAll();
+        List<Task> tasks = taskRepository.findAll();
+        tasks.forEach(task -> {
+            if (task.getCategoryId() != null) {
+                String catName = taskRepository.findCategoryNameById(task.getCategoryId());
+                task.setCategoryInput(catName);
+            }
+        });
+        return tasks;
     }
 
     public java.util.Map<String, Object> getDashboardStats(Long userId) {
