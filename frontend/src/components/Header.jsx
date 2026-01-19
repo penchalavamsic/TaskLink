@@ -13,7 +13,7 @@ const Header = ({ role = 'user' }) => {
             if (role === 'admin') {
                 setDisplayName('Admin');
             } else {
-                const userStr = localStorage.getItem('user');
+                const userStr = sessionStorage.getItem('user');
                 if (userStr) {
                     try {
                         const user = JSON.parse(userStr);
