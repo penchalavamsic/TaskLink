@@ -47,6 +47,16 @@ public class TaskController {
         }
     }
 
+    @PutMapping("/{taskId}/complete")
+    public ResponseEntity<?> completeTask(@PathVariable Long taskId) {
+        try {
+            Task task = taskService.completeTask(taskId);
+            return ResponseEntity.ok(task);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error completing task: " + e.getMessage());
+        }
+    }
+
     @GetMapping("/worker/{workerId}")
     public ResponseEntity<List<Task>> getTasksByWorker(@PathVariable Long workerId) {
         return ResponseEntity.ok(taskService.getTasksByWorkerId(workerId));
