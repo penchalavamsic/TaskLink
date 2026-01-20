@@ -6,7 +6,7 @@ const MyJobs = () => {
 
     React.useEffect(() => {
         const fetchJobs = async () => {
-            const userStr = localStorage.getItem('user');
+            const userStr = sessionStorage.getItem('user');
             if (!userStr) return;
             const user = JSON.parse(userStr);
 

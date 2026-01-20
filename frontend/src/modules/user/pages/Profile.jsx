@@ -28,7 +28,7 @@ const Profile = () => {
     React.useEffect(() => {
         const fetchAllData = async () => {
             try {
-                const userStr = localStorage.getItem('user');
+                const userStr = sessionStorage.getItem('user');
                 if (!userStr) {
                     setLoading(false);
                     return;
@@ -43,9 +43,9 @@ const Profile = () => {
                 }
 
                 setUserData({
-                    firstName: user.firstName || profile.firstName || '',
-                    lastName: user.lastName || profile.lastName || '',
-                    email: user.email || profile.email || '',
+                    firstName: profile.firstName || '',
+                    lastName: profile.lastName || '',
+                    email: profile.email || '',
                     phone: profile.phone || '',
                     address: profile.address || '',
                     bio: profile.bio || ''
@@ -79,7 +79,7 @@ const Profile = () => {
     const handleSaveChanges = async (e) => {
         e.preventDefault();
         try {
-            const userStr = localStorage.getItem('user');
+            const userStr = sessionStorage.getItem('user');
             if (userStr) {
                 const user = JSON.parse(userStr);
 
@@ -93,7 +93,7 @@ const Profile = () => {
                     alert("Changes Saved Successfully!");
                     // Update local storage to reflect changes immediately in Header
                     const updatedUser = { ...user, firstName: userData.firstName, lastName: userData.lastName };
-                    localStorage.setItem('user', JSON.stringify(updatedUser));
+                    sessionStorage.setItem('user', JSON.stringify(updatedUser));
                     // Dispatch event for Header to listener
                     window.dispatchEvent(new Event('user-info-updated'));
                 } else {
@@ -132,7 +132,7 @@ const Profile = () => {
                             <img src={avatar} className="rounded-circle img-thumbnail" alt="Profile" style={{ width: '150px', height: '150px', objectFit: 'cover' }} /> {/* Reverted to avatar */}
                         </div>
                         <h4 className="fw-bold mb-1">{userData.firstName} {userData.lastName}</h4>
-                        <p className="text-muted mb-3">User</p>
+                        <p className="text-muted mb-3">Client</p>
                         <div className="d-flex justify-content-center gap-2 mb-3">
                             {/* <input
                                 type="file"

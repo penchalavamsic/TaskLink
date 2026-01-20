@@ -7,7 +7,7 @@ const MyTasks = () => {
 
     useEffect(() => {
         const fetchTasks = async () => {
-            const userStr = localStorage.getItem('user');
+            const userStr = sessionStorage.getItem('user');
             if (!userStr) {
                 setLoading(false);
                 return;
