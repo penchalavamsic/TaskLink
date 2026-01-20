@@ -32,6 +32,13 @@ public class UserController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/profile/by-email")
+    public ResponseEntity<?> getUserProfileByEmail(@RequestParam String email) {
+        return userService.getUserByEmail(email)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @PutMapping("/{userId}/profile")
     public ResponseEntity<?> updateUserProfile(@PathVariable Long userId,
             @RequestBody com.tasklink.backend.model.User user) {

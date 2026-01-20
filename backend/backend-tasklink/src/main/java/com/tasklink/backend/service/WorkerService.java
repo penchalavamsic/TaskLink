@@ -56,9 +56,19 @@ public class WorkerService {
                 user.setPhone(inputUser.getPhone());
             if (inputUser.getAddress() != null)
                 user.setAddress(inputUser.getAddress());
+            // ALSO update User bio if provided in the nested user object, to satisfy user
+            // expectation
+            // effectively syncing them if edited here.
+            if (inputUser.getBio() != null)
+                user.setBio(inputUser.getBio());
+
             // Note: Email is intentionally skipped for security.
             userRepository.save(user); // Save User updates
         }
+
+        System.out.println("DEBUG: Updating Worker Profile. ID=" + id);
+        System.out.println("DEBUG: Input Bio=" + workerInput.getBio());
+        System.out.println("DEBUG: Input Profession=" + workerInput.getProfessionTitle());
 
         // 3. Fetch existing Worker or Create New
         Worker workerToSave = workerRepository.findById(id).orElseGet(() -> {
