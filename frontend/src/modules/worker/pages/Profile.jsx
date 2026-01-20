@@ -72,14 +72,17 @@ const WorkerProfile = () => {
         // Construct payload: Worker object with nested User object
         const payload = {
             professionTitle: profileData.professionTitle,
-            bio: profileData.bio, // Ensure this matches the backend Worker.bio field
+            bio: profileData.bio, // Worker Bio
             user: {
                 firstName: profileData.firstName,
                 lastName: profileData.lastName,
                 phone: profileData.phone,
-                address: profileData.address
+                address: profileData.address,
+                bio: profileData.bio // User Bio (Syncing both)
             }
         };
+
+        console.log("Saving Worker Profile Payload:", payload);
 
         try {
             const response = await fetch(`http://localhost:8080/api/worker/${user.userId}/profile`, {

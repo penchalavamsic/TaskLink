@@ -35,11 +35,18 @@ const Profile = () => {
                 }
                 const user = JSON.parse(userStr);
 
-                // 1. Fetch Profile Data
-                const profileResponse = await fetch(`http://localhost:8080/api/user/${user.userId}/profile`);
+                // 1. Fetch Profile Data using Email (Strict Constraint)
+                const profileResponse = await fetch(`http://localhost:8080/api/user/profile/by-email?email=${user.email}`);
                 let profile = {};
                 if (profileResponse.ok) {
                     profile = await profileResponse.json();
+
+                    // Safety Check: Verify ID matches session (Optional but good sanity check)
+                    if (profile.id && profile.id !== user.userId) {
+                        console.warn("User ID mismatch detected! Session:", user.userId, "Fetched:", profile.id);
+                        // If we trust the email fetch, we might want to update the session ID if it was wrong?
+                        // For now, we trust the email-based record as the source of truth for display.
+                    }
                 }
 
                 setUserData({
