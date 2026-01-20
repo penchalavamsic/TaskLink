@@ -17,7 +17,7 @@ const WorkerProfile = () => {
 
     React.useEffect(() => {
         const fetchProfile = async () => {
-            const userStr = localStorage.getItem('user');
+            const userStr = sessionStorage.getItem('user');
             if (!userStr) return;
             const user = JSON.parse(userStr);
 
@@ -44,7 +44,7 @@ const WorkerProfile = () => {
                     phone: profile.user?.phone || '',
                     address: profile.user?.address || '',
                     professionTitle: profile.professionTitle || 'Worker',
-                    bio: profile.bio || profile.user?.bio || '',
+                    bio: profile.bio || '',
                     stats: {
                         rating: stats.rating || 0.0,
                         jobsDone: stats.jobsCompleted || 0,
@@ -65,14 +65,14 @@ const WorkerProfile = () => {
 
     const handleSave = async (e) => {
         e.preventDefault();
-        const userStr = localStorage.getItem('user');
+        const userStr = sessionStorage.getItem('user');
         if (!userStr) return;
         const user = JSON.parse(userStr);
 
         // Construct payload: Worker object with nested User object
         const payload = {
             professionTitle: profileData.professionTitle,
-            bio: profileData.bio,
+            bio: profileData.bio, // Ensure this matches the backend Worker.bio field
             user: {
                 firstName: profileData.firstName,
                 lastName: profileData.lastName,
@@ -90,10 +90,6 @@ const WorkerProfile = () => {
 
             if (response.ok) {
                 alert("Profile Updated Successfully!");
-                // Update local storage
-                const updatedUser = { ...user, firstName: profileData.firstName, lastName: profileData.lastName };
-                localStorage.setItem('user', JSON.stringify(updatedUser));
-                window.dispatchEvent(new Event('user-info-updated'));
             } else {
                 const errorText = await response.text();
                 alert(`Failed to update profile: ${errorText}`);
@@ -147,17 +143,30 @@ const WorkerProfile = () => {
                         </div>
                         <div className="card-body">
                             <form onSubmit={handleSave}>
-                                {/* Read-Only User Details */}
+                                {/* User Details (Editable) */}
                                 <div className="row mb-3">
                                     <div className="col-md-6">
-                                        <label className="form-label fw-semibold">Name</label>
+                                        <label className="form-label fw-semibold">First Name</label>
                                         <input
                                             type="text"
-                                            className="form-control bg-light"
-                                            value={`${profileData.firstName} ${profileData.lastName}`}
-                                            disabled
+                                            className="form-control"
+                                            name="firstName"
+                                            value={profileData.firstName}
+                                            onChange={handleInputChange}
                                         />
                                     </div>
+                                    <div className="col-md-6">
+                                        <label className="form-label fw-semibold">Last Name</label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            name="lastName"
+                                            value={profileData.lastName}
+                                            onChange={handleInputChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="row mb-3">
                                     <div className="col-md-6">
                                         <label className="form-label fw-semibold">Email</label>
                                         <input
@@ -167,26 +176,26 @@ const WorkerProfile = () => {
                                             disabled
                                         />
                                     </div>
-                                </div>
-                                <div className="row mb-3">
                                     <div className="col-md-6">
                                         <label className="form-label fw-semibold">Phone</label>
                                         <input
                                             type="text"
-                                            className="form-control bg-light"
+                                            className="form-control"
+                                            name="phone"
                                             value={profileData.phone}
-                                            disabled
+                                            onChange={handleInputChange}
                                         />
                                     </div>
-                                    <div className="col-md-6">
-                                        <label className="form-label fw-semibold">Address</label>
-                                        <input
-                                            type="text"
-                                            className="form-control bg-light"
-                                            value={profileData.address}
-                                            disabled
-                                        />
-                                    </div>
+                                </div>
+                                <div className="mb-3">
+                                    <label className="form-label fw-semibold">Address</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        name="address"
+                                        value={profileData.address}
+                                        onChange={handleInputChange}
+                                    />
                                 </div>
 
                                 <hr className="my-4" />
@@ -205,7 +214,7 @@ const WorkerProfile = () => {
                                 </div>
 
                                 <div className="mb-3">
-                                    <label className="form-label fw-semibold">Professional Bio</label>
+                                    <label className="form-label fw-semibold">Bio</label>
                                     <textarea
                                         className="form-control"
                                         rows="3"

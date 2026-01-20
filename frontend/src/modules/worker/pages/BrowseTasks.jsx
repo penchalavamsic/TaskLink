@@ -48,7 +48,7 @@ const BrowseTasks = () => {
     const handleAcceptTask = async (taskId) => {
         if (!window.confirm("Are you sure you want to accept this task?")) return;
 
-        const userStr = localStorage.getItem('user');
+        const userStr = sessionStorage.getItem('user');
         if (!userStr) {
             alert("Please login to acceptance task.");
             return;
