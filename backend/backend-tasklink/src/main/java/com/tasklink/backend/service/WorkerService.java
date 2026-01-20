@@ -45,16 +45,25 @@ public class WorkerService {
         com.tasklink.backend.model.User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // REMOVED: Updating User fields (Name, Phone, Address, Bio) from Worker update
-        // logic
-        // This ensures Worker Profile updates do no overwrite User/Client identity.
+        // 2. Update User Fields (Name, Phone, Address) if provided in input
+        if (workerInput.getUser() != null) {
+            com.tasklink.backend.model.User inputUser = workerInput.getUser();
+            if (inputUser.getFirstName() != null)
+                user.setFirstName(inputUser.getFirstName());
+            if (inputUser.getLastName() != null)
+                user.setLastName(inputUser.getLastName());
+            if (inputUser.getPhone() != null)
+                user.setPhone(inputUser.getPhone());
+            if (inputUser.getAddress() != null)
+                user.setAddress(inputUser.getAddress());
+            // Note: Email is intentionally skipped for security.
+            userRepository.save(user); // Save User updates
+        }
 
-        // 2. Fetch existing Worker or Create New
+        // 3. Fetch existing Worker or Create New
         Worker workerToSave = workerRepository.findById(id).orElseGet(() -> {
             Worker newWorker = new Worker();
             newWorker.setUser(user);
-            // newWorker.setId(id); // With @MapsId, avoiding manual ID setting sometimes
-            // helps
             return newWorker;
         });
 
