@@ -1,20 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import StatCard from '../../../components/StatCard';
 
 const Dashboard = () => {
-    // Mock data for Admin Stats
-    const stats = [
-        { title: 'Total Users', value: '1,250', icon: 'bi bi-people', color: 'primary' },
-        { title: 'Total Workers', value: '850', icon: 'bi bi-person-badge', color: 'success' },
-        { title: 'Active Tasks', value: '320', icon: 'bi bi-list-task', color: 'info' },
-    ];
+    // State for dynamic data
+    const [stats, setStats] = useState([
+        { title: 'Total Users', value: '0', icon: 'bi bi-people', color: 'primary' },
+        { title: 'Total Workers', value: '0', icon: 'bi bi-person-badge', color: 'success' },
+        { title: 'Active Tasks', value: '0', icon: 'bi bi-list-task', color: 'info' },
+    ]);
+    const [recentUsers, setRecentUsers] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    const recentUsers = [
-        { id: 1, name: 'Rajesh Kumar', role: 'User', date: 'Oct 26, 2023', status: 'Active' },
-        { id: 2, name: 'Suresh Reddy', role: 'Worker', date: 'Oct 26, 2023', status: 'Pending' },
-        { id: 3, name: 'Amit Sharma', role: 'User', date: 'Oct 25, 2023', status: 'Active' },
-        { id: 4, name: 'Priya Patel', role: 'Worker', date: 'Oct 24, 2023', status: 'Active' },
-    ];
+    useEffect(() => {
+        // Placeholder for scraping/fetching real data
+        const fetchDashboardData = async () => {
+            try {
+                // TODO: Fetch real stats from backend
+                // const response = await fetch('http://localhost:8080/api/admin/dashboard-stats');
+                // const data = await response.json();
+
+                // Use simulated delay for now to show "loading" or just ready state
+                setLoading(false);
+            } catch (error) {
+                console.error("Error fetching dashboard data:", error);
+                setLoading(false);
+            }
+        };
+
+        fetchDashboardData();
+    }, []);
 
     return (
         <div className="container-fluid p-0">
@@ -48,18 +62,26 @@ const Dashboard = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {recentUsers.map(user => (
-                                            <tr key={user.id}>
-                                                <td className="fw-semibold">{user.name}</td>
-                                                <td>{user.role}</td>
-                                                <td>{user.date}</td>
-                                                <td>
-                                                    <span className={`badge ${user.status === 'Active' ? 'bg-success' : 'bg-warning text-dark'}`}>
-                                                        {user.status}
-                                                    </span>
+                                        {recentUsers.length > 0 ? (
+                                            recentUsers.map(user => (
+                                                <tr key={user.id}>
+                                                    <td className="fw-semibold">{user.name}</td>
+                                                    <td>{user.role}</td>
+                                                    <td>{user.date}</td>
+                                                    <td>
+                                                        <span className={`badge ${user.status === 'Active' ? 'bg-success' : 'bg-warning text-dark'}`}>
+                                                            {user.status}
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        ) : (
+                                            <tr>
+                                                <td colSpan="4" className="text-center py-4 text-muted">
+                                                    No recent registrations found
                                                 </td>
                                             </tr>
-                                        ))}
+                                        )}
                                     </tbody>
                                 </table>
                             </div>
