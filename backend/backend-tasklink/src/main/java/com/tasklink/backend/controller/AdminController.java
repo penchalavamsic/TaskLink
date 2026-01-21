@@ -42,4 +42,9 @@ public class AdminController {
 
         return ResponseEntity.ok(stats);
     }
+
+    @GetMapping("/recent-registrations")
+    public ResponseEntity<java.util.List<com.tasklink.backend.model.User>> getRecentRegistrations() {
+        return ResponseEntity.ok(userRepository.findTop5ByOrderByIdDesc());
+    }
 }

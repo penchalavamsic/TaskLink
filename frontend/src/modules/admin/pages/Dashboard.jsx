@@ -29,6 +29,24 @@ const Dashboard = () => {
                 } else {
                     console.error("Failed to fetch dashboard stats");
                 }
+
+                // Fetch Recent Registrations
+                console.log("Fetching recent registrations...");
+                const userResponse = await fetch('http://localhost:8080/api/admin/recent-registrations');
+                if (userResponse.ok) {
+                    const users = await userResponse.json();
+                    console.log("Recent users:", users);
+                    setRecentUsers(users.map(u => ({
+                        id: u.id,
+                        name: u.firstName + ' ' + u.lastName,
+                        role: u.role === 'CLIENT' ? 'User' : (u.role === 'WORKER' ? 'Worker' : 'Admin'),
+                        date: u.joinedAt ? new Date(u.joinedAt).toLocaleDateString() : 'N/A',
+                        status: 'Active' // Defaulting to Active as we don't have status in User model yet
+                    })));
+                } else {
+                    console.error("Failed to fetch recent registrations");
+                }
+
                 setLoading(false);
             } catch (error) {
                 console.error("Error fetching dashboard data:", error);
