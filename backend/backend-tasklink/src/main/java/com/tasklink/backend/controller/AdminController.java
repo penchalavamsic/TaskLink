@@ -47,4 +47,18 @@ public class AdminController {
     public ResponseEntity<java.util.List<com.tasklink.backend.model.User>> getRecentRegistrations() {
         return ResponseEntity.ok(userRepository.findTop5ByOrderByIdDesc());
     }
+
+    @GetMapping("/users")
+    public ResponseEntity<java.util.List<com.tasklink.backend.model.User>> getAllUsers() {
+        return ResponseEntity.ok(userRepository.findAll());
+    }
+
+    @org.springframework.web.bind.annotation.DeleteMapping("/users/{id}")
+    public ResponseEntity<?> deleteUser(@org.springframework.web.bind.annotation.PathVariable Long id) {
+        if (!userRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+        userRepository.deleteById(id);
+        return ResponseEntity.ok("User deleted successfully");
+    }
 }

@@ -13,10 +13,17 @@ const ManageUsers = () => {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                // TODO: Fetch real users from backend
-                // const response = await fetch('http://localhost:8080/api/admin/users');
-                // const data = await response.json();
-
+                const response = await fetch('http://localhost:8080/api/admin/users');
+                if (response.ok) {
+                    const data = await response.json();
+                    setUsers(data.map(u => ({
+                        id: u.id,
+                        name: u.firstName + ' ' + u.lastName,
+                        email: u.email,
+                        role: u.role === 'CLIENT' ? 'User' : (u.role === 'WORKER' ? 'Worker' : 'Admin'),
+                        status: 'Active' // Placeholder status
+                    })));
+                }
                 setLoading(false);
             } catch (error) {
                 console.error("Error fetching users:", error);
@@ -27,10 +34,22 @@ const ManageUsers = () => {
         fetchUsers();
     }, []);
 
-    const handleDelete = (id) => {
+    const handleDelete = async (id) => {
         if (window.confirm('Are you sure you want to delete this user?')) {
-            // TODO: Call API to delete user
-            setUsers(users.filter(user => user.id !== id));
+            try {
+                const response = await fetch(`http://localhost:8080/api/admin/users/${id}`, {
+                    method: 'DELETE'
+                });
+                if (response.ok) {
+                    setUsers(users.filter(user => user.id !== id));
+                    alert("User deleted successfully");
+                } else {
+                    alert("Failed to delete user");
+                }
+            } catch (error) {
+                console.error("Error deleting user:", error);
+                alert("Error deleting user");
+            }
         }
     };
 
