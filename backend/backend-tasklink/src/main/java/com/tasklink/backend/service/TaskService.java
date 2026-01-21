@@ -5,13 +5,18 @@ import com.tasklink.backend.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TaskService {
 
     @Autowired
     private TaskRepository taskRepository;
+
+    @Autowired
+    private com.tasklink.backend.repository.UserRepository userRepository;
 
     @org.springframework.transaction.annotation.Transactional
     public Task createTask(Task task) {
@@ -57,9 +62,6 @@ public class TaskService {
         return tasks;
     }
 
-    @Autowired
-    private com.tasklink.backend.repository.UserRepository userRepository;
-
     public List<Task> getAllTasks() {
         List<Task> tasks = taskRepository.findAll();
         tasks.forEach(task -> {
@@ -97,13 +99,20 @@ public class TaskService {
         return taskRepository.save(task);
     }
 
-    public java.util.Map<String, Object> getDashboardStats(Long userId) {
+    public void deleteTask(Long taskId) {
+        if (!taskRepository.existsById(taskId)) {
+            throw new RuntimeException("Task not found");
+        }
+        taskRepository.deleteById(taskId);
+    }
+
+    public Map<String, Object> getDashboardStats(Long userId) {
         long totalTasks = taskRepository.countByClientId(userId);
         long inProgress = taskRepository.countByClientIdAndStatus(userId, "IN_PROGRESS");
         long completed = taskRepository.countByClientIdAndStatus(userId, "COMPLETED");
         Double spent = taskRepository.sumSpentByClientId(userId);
 
-        java.util.Map<String, Object> stats = new java.util.HashMap<>();
+        Map<String, Object> stats = new HashMap<>();
         stats.put("totalTasks", totalTasks);
         stats.put("inProgress", inProgress);
         stats.put("completed", completed);
