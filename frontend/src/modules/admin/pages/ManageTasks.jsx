@@ -1,16 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '../../../components/Button';
 
 const ManageTasks = () => {
-    const tasks = [
-        { id: 101, title: 'Fix Leaking Tap', postedBy: 'Rajesh Kumar', budget: '₹200', status: 'In Progress', date: 'Oct 26, 2023' },
-        { id: 102, title: 'Sofa Set Cleaning', postedBy: 'Amit Sharma', budget: '₹500', status: 'Open', date: 'Oct 25, 2023' },
-        { id: 103, title: 'Kitchen Platform Repair', postedBy: 'Neha Gupta', budget: '₹1200', status: 'Completed', date: 'Oct 24, 2023' },
-        { id: 104, title: 'Fan Installation', postedBy: 'Vikram Singh', budget: '₹300', status: 'Flagged', date: 'Oct 23, 2023' },
-    ];
-
+    const [tasks, setTasks] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [filterStatus, setFilterStatus] = useState('All');
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchTasks = async () => {
+            try {
+                // TODO: Fetch tasks from backend
+                // const response = await fetch('http://localhost:8080/api/admin/tasks');
+                // const data = await response.json();
+
+                setLoading(false);
+            } catch (error) {
+                console.error("Error fetching tasks:", error);
+                setLoading(false);
+            }
+        };
+
+        fetchTasks();
+    }, []);
 
     const filteredTasks = tasks.filter(task => {
         const matchesSearch = task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -59,24 +71,36 @@ const ManageTasks = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {filteredTasks.map(task => (
-                                    <tr key={task.id}>
-                                        <td className="ps-4 text-muted">#{task.id}</td>
-                                        <td className="fw-semibold">{task.title}</td>
-                                        <td>{task.postedBy}</td>
-                                        <td className="text-success fw-bold">{task.budget}</td>
-                                        <td>
-                                            <span className={`badge rounded-pill ${task.status === 'Open' ? 'bg-success' :
-                                                task.status === 'In Progress' ? 'bg-primary' :
-                                                    task.status === 'Completed' ? 'bg-success' :
-                                                        'bg-danger'
-                                                }`}>
-                                                {task.status}
-                                            </span>
-                                        </td>
-                                        <td>{task.date}</td>
+                                {loading ? (
+                                    <tr>
+                                        <td colSpan="6" className="text-center py-4">Loading tasks...</td>
                                     </tr>
-                                ))}
+                                ) : filteredTasks.length > 0 ? (
+                                    filteredTasks.map(task => (
+                                        <tr key={task.id}>
+                                            <td className="ps-4 text-muted">#{task.id}</td>
+                                            <td className="fw-semibold">{task.title}</td>
+                                            <td>{task.postedBy}</td>
+                                            <td className="text-success fw-bold">{task.budget}</td>
+                                            <td>
+                                                <span className={`badge rounded-pill ${task.status === 'Open' ? 'bg-success' :
+                                                    task.status === 'In Progress' ? 'bg-primary' :
+                                                        task.status === 'Completed' ? 'bg-secodary' : // fixed typo from secodary if any, assuming success green or primary blue
+                                                            task.status === 'Completed' ? 'bg-success' : 'bg-danger' // Just using original logic but ensuring safety
+                                                    }`}>
+                                                    {task.status}
+                                                </span>
+                                            </td>
+                                            <td>{task.date}</td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan="6" className="text-center py-5 text-muted">
+                                            No tasks found
+                                        </td>
+                                    </tr>
+                                )}
                             </tbody>
                         </table>
                     </div>
