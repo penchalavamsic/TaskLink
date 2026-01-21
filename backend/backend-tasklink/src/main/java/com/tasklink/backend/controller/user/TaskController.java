@@ -57,6 +57,16 @@ public class TaskController {
         }
     }
 
+    @DeleteMapping("/{taskId}")
+    public ResponseEntity<?> deleteTask(@PathVariable Long taskId) {
+        try {
+            taskService.deleteTask(taskId);
+            return ResponseEntity.ok("Task deleted successfully");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error deleting task: " + e.getMessage());
+        }
+    }
+
     @GetMapping("/worker/{workerId}")
     public ResponseEntity<List<Task>> getTasksByWorker(@PathVariable Long workerId) {
         return ResponseEntity.ok(taskService.getTasksByWorkerId(workerId));
