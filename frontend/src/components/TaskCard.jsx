@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const TaskCard = ({ task, detailPath = '/user/task-detail' }) => {
+const TaskCard = ({ task, detailPath = '/user/task-detail', onComplete }) => {
     // Default values if task prop is missing properties
     const {
         id = 1,
@@ -31,6 +31,17 @@ const TaskCard = ({ task, detailPath = '/user/task-detail' }) => {
                 </p>
                 <div className="d-flex justify-content-between align-items-center">
                     <span className="fw-bold text-primary">{budget}</span>
+                    {onComplete && (
+                        <button
+                            className={`btn btn-sm rounded-pill px-3 ${status === "COMPLETED" ? "btn-success" : "btn-outline-secondary"}`}
+                            onClick={() => status !== "COMPLETED" && onComplete(id)}
+                            disabled={status === "COMPLETED"}
+                            style={status !== "COMPLETED" ? { opacity: 0.6 } : {}}
+                            title={status === "COMPLETED" ? "Task Completed" : "Mark as Completed"}
+                        >
+                            <i className="bi bi-check-circle-fill me-1"></i> Completed
+                        </button>
+                    )}
                 </div>
                 {status === "IN_PROGRESS" && workerName && (
                     <div className="alert alert-info py-1 px-2 mt-2 mb-0 small">

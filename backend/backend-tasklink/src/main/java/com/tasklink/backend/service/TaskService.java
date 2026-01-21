@@ -88,6 +88,15 @@ public class TaskService {
         return taskRepository.save(task);
     }
 
+    public Task completeTask(Long taskId) {
+        Task task = taskRepository.findById(taskId).orElseThrow(() -> new RuntimeException("Task not found"));
+        if ("COMPLETED".equals(task.getStatus())) {
+            throw new RuntimeException("Task is already completed");
+        }
+        task.setStatus("COMPLETED");
+        return taskRepository.save(task);
+    }
+
     public java.util.Map<String, Object> getDashboardStats(Long userId) {
         long totalTasks = taskRepository.countByClientId(userId);
         long inProgress = taskRepository.countByClientIdAndStatus(userId, "IN_PROGRESS");
