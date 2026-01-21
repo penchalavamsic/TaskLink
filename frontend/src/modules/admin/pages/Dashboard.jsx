@@ -12,14 +12,23 @@ const Dashboard = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Placeholder for scraping/fetching real data
         const fetchDashboardData = async () => {
             try {
-                // TODO: Fetch real stats from backend
-                // const response = await fetch('http://localhost:8080/api/admin/dashboard-stats');
-                // const data = await response.json();
+                console.log("Fetching dashboard stats...");
+                const response = await fetch('http://localhost:8080/api/admin/dashboard-stats');
+                console.log("Response status:", response.status);
 
-                // Use simulated delay for now to show "loading" or just ready state
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log("Dashboard data:", data);
+                    setStats([
+                        { title: 'Total Users', value: data.totalUsers !== undefined ? data.totalUsers.toString() : '0', icon: 'bi bi-people', color: 'primary' },
+                        { title: 'Total Workers', value: data.totalWorkers !== undefined ? data.totalWorkers.toString() : '0', icon: 'bi bi-person-badge', color: 'success' },
+                        { title: 'Active Tasks', value: data.activeTasks !== undefined ? data.activeTasks.toString() : '0', icon: 'bi bi-list-task', color: 'info' },
+                    ]);
+                } else {
+                    console.error("Failed to fetch dashboard stats");
+                }
                 setLoading(false);
             } catch (error) {
                 console.error("Error fetching dashboard data:", error);
