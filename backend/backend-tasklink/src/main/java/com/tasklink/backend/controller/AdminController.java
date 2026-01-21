@@ -24,6 +24,9 @@ public class AdminController {
     @Autowired
     private TaskRepository taskRepository;
 
+    @Autowired
+    private com.tasklink.backend.service.TaskService taskService;
+
     @GetMapping("/dashboard-stats")
     public ResponseEntity<Map<String, Object>> getDashboardStats() {
         long totalUsers = userRepository.countByRole(Role.CLIENT);
@@ -60,5 +63,20 @@ public class AdminController {
         }
         userRepository.deleteById(id);
         return ResponseEntity.ok("User deleted successfully");
+    }
+
+    @GetMapping("/tasks")
+    public ResponseEntity<java.util.List<com.tasklink.backend.model.Task>> getAllTasks() {
+        return ResponseEntity.ok(taskService.getAllTasks());
+    }
+
+    @org.springframework.web.bind.annotation.DeleteMapping("/tasks/{id}")
+    public ResponseEntity<?> deleteTask(@org.springframework.web.bind.annotation.PathVariable Long id) {
+        try {
+            taskService.deleteTask(id);
+            return ResponseEntity.ok("Task deleted successfully");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error deleting task: " + e.getMessage());
+        }
     }
 }

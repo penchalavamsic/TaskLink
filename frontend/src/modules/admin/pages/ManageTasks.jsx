@@ -10,10 +10,18 @@ const ManageTasks = () => {
     useEffect(() => {
         const fetchTasks = async () => {
             try {
-                // TODO: Fetch tasks from backend
-                // const response = await fetch('http://localhost:8080/api/admin/tasks');
-                // const data = await response.json();
-
+                const response = await fetch('http://localhost:8080/api/admin/tasks');
+                if (response.ok) {
+                    const data = await response.json();
+                    setTasks(data.map(t => ({
+                        id: t.id,
+                        title: t.title,
+                        postedBy: t.clientName || 'Unknown',
+                        budget: `₹${t.budget}`,
+                        status: t.status,
+                        date: new Date(t.deadline).toLocaleDateString()
+                    })));
+                }
                 setLoading(false);
             } catch (error) {
                 console.error("Error fetching tasks:", error);
@@ -23,6 +31,25 @@ const ManageTasks = () => {
 
         fetchTasks();
     }, []);
+
+    const handleDelete = async (id) => {
+        if (window.confirm('Are you sure you want to delete this task?')) {
+            try {
+                const response = await fetch(`http://localhost:8080/api/admin/tasks/${id}`, {
+                    method: 'DELETE'
+                });
+                if (response.ok) {
+                    setTasks(tasks.filter(t => t.id !== id));
+                    alert("Task deleted successfully");
+                } else {
+                    alert("Failed to delete task");
+                }
+            } catch (error) {
+                console.error("Error deleting task:", error);
+                alert("Error deleting task");
+            }
+        }
+    };
 
     const filteredTasks = tasks.filter(task => {
         const matchesSearch = task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -68,12 +95,13 @@ const ManageTasks = () => {
                                     <th>Budget</th>
                                     <th>Status</th>
                                     <th>Date</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {loading ? (
                                     <tr>
-                                        <td colSpan="6" className="text-center py-4">Loading tasks...</td>
+                                        <td colSpan="7" className="text-center py-4">Loading tasks...</td>
                                     </tr>
                                 ) : filteredTasks.length > 0 ? (
                                     filteredTasks.map(task => (
@@ -85,18 +113,27 @@ const ManageTasks = () => {
                                             <td>
                                                 <span className={`badge rounded-pill ${task.status === 'Open' ? 'bg-success' :
                                                     task.status === 'In Progress' ? 'bg-primary' :
-                                                        task.status === 'Completed' ? 'bg-secodary' : // fixed typo from secodary if any, assuming success green or primary blue
-                                                            task.status === 'Completed' ? 'bg-success' : 'bg-danger' // Just using original logic but ensuring safety
+                                                        task.status === 'Completed' ? 'bg-success' : 'bg-danger'
                                                     }`}>
                                                     {task.status}
                                                 </span>
                                             </td>
                                             <td>{task.date}</td>
+                                            <td>
+                                                <Button
+                                                    variant="outline-danger"
+                                                    className="btn-sm"
+                                                    onClick={() => handleDelete(task.id)}
+                                                    title="Delete Task"
+                                                >
+                                                    <i className="bi bi-trash"></i>
+                                                </Button>
+                                            </td>
                                         </tr>
                                     ))
                                 ) : (
                                     <tr>
-                                        <td colSpan="6" className="text-center py-5 text-muted">
+                                        <td colSpan="7" className="text-center py-5 text-muted">
                                             No tasks found
                                         </td>
                                     </tr>
