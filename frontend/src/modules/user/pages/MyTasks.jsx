@@ -66,6 +66,25 @@ const MyTasks = () => {
         }
     };
 
+    const handleDeleteTask = async (taskId) => {
+        try {
+            const response = await fetch(`http://localhost:8080/api/tasks/${taskId}`, {
+                method: 'DELETE'
+            });
+
+            if (response.ok) {
+                alert("Task deleted successfully!");
+                setTasks(prevTasks => prevTasks.filter(t => t.id !== taskId));
+            } else {
+                const msg = await response.text();
+                alert("Failed to delete task: " + msg);
+            }
+        } catch (error) {
+            console.error("Error deleting task:", error);
+            alert("Error deleting task.");
+        }
+    };
+
     return (
         <div className="container-fluid p-0">
             <div className="d-flex justify-content-between align-items-center mb-4">
@@ -89,7 +108,7 @@ const MyTasks = () => {
                 ) : tasks.length > 0 ? (
                     tasks.map(task => (
                         <div className="col-md-6 col-lg-4 col-xl-4" key={task.id}>
-                            <TaskCard task={task} onComplete={handleCompleteTask} />
+                            <TaskCard task={task} onComplete={handleCompleteTask} onDelete={handleDeleteTask} />
                         </div>
                     ))
                 ) : (
