@@ -11,4 +11,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     boolean existsByEmail(String email);
 
     long countByRole(com.tasklink.backend.model.Role role);
+
+    java.util.List<User> findTop5ByOrderByIdDesc();
 }
