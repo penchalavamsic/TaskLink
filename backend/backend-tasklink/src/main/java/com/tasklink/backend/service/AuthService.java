@@ -38,6 +38,17 @@ public class AuthService {
     }
 
     public AuthResponse login(LoginRequest request) {
+        // Default Admin Login
+        if ("admin@gmail.com".equals(request.getEmail()) && "Admin@123".equals(request.getPassword())) {
+            return AuthResponse.builder()
+                    .userId(0L) // identifying admin with 0
+                    .email("admin@gmail.com")
+                    .firstName("Super")
+                    .lastName("Admin")
+                    .role("Admin")
+                    .build();
+        }
+
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
