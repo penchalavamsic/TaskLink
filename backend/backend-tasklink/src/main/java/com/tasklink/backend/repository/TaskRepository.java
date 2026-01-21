@@ -33,4 +33,6 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
     @Query(value = "SELECT name FROM categories WHERE id = :id", nativeQuery = true)
     String findCategoryNameById(@org.springframework.data.repository.query.Param("id") Integer id);
+
+    long countByStatus(String status);
 }
