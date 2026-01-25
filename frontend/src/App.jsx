@@ -9,6 +9,7 @@ import Profile from './modules/user/pages/Profile';
 import TaskDetail from './modules/user/pages/TaskDetail';
 import Login from './modules/authentication/Login';
 import SignUp from './modules/authentication/SignUp';
+import LandingPage from './pages/LandingPage';
 
 // Admin Imports
 import AdminLayout from './modules/admin/AdminLayout';
@@ -30,7 +31,7 @@ function App() {
     return (
         <Routes>
             {/* Redirect root to User Dashboard for now, or Login */}
-            <Route path="/" element={<Navigate to="/login" replace />} />
+            <Route path="/" element={<LandingPage />} />
 
             {/* Auth Routes */}
             <Route path="/login" element={<Login />} />
